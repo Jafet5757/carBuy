@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<title>Name</title>
+	<style type="text/css">
+		nav{
+			position: fixed
+		}
+		body{
+			background-color: #DFDFDF;
+		}
+		.no-gutters{
+			height: 35vw;
+		}
+		@media screen and (max-width: 1250px){
+			.no-gutters{
+				height: 60vw;
+			}
+		}
+		@media screen and (max-width: 1000px){
+			.no-gutters{
+				height: 120vw;
+			}
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-light bg-light">
+		<div class="container">
+			<a href="#" class="navbar-brand">
+				App
+			</a>
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+			<div class="collapse navbar-collapse" id="secondNavbar">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Service</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+					<li class="nav-item"><a href="nav-link" href="#"><i class="fas fa-shopping-basket m-2"></i></a></li>
+				</ul>
+				<form class="form-inline">
+					<input type="text" class="form-control" placeholder="Search">
+					<button class="btn btn-outline-warning ml-2">Buscar</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mx-auto m-5 p-3">
+		<div class="card mb-3" style="max-width: 1500px; min-width: 600px">
+		  <div class="row no-gutters">
+		    <div class="col-md-4">
+		      <img src="https://th.bing.com/th/id/OIP.5BDKkXcd5_8wvS03ctywHwHaEK?w=262&h=160&c=7&o=5&pid=1.7" class="card-img m-2" alt="...">
+		    </div>
+		    <div class="col-md-8">
+		      <div class="card-body">
+		        <h5 class="card-title h1">Nombre del vehiculo</h5>		       
+		        <p>Color: negro<br><br>marca: honda<br><br>Modelo: TLX<br><br>Precio: $310,000 mxn</p>
+		        <form class="mt-3">
+		        	<button class="btn btn-info m-2">comprar</button>
+		        	<button class="btn btn-outline-info">Agregar al carro de cmpras</button>
+		        </form>
+		        <hr>
+		        		    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+
+
+
+</body>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>
