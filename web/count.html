@@ -2,20 +2,10 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-	<title>Login</title>
+	<title>My cuenta</title>
 	<style type="text/css">
-		form{
-			border-radius: 6px;
-			background-color: white;
-			padding: 7px;
-			position: relative;
-			left: 15%;
-			position: relative;
-			left: 50%;
-		}
-		body{
-			background: url('https://www.honda.mx/assets/img/autos/acura/modelos/nsx2020/galerias/galeria_1/1.jpg'); 
-			background-repeat: no-repeat; 
+		a{
+			color: #CECECE;
 		}
 	</style>
 </head>
@@ -44,11 +34,11 @@
 			</div>
 		</div>
 	</nav>
-	<!--_________________________________________ -->
+	<!-- termina el navegador-->
 
 	<div class="container mx-auto m-5">
 		<div class="row mx-auto">
-			<form>
+			<form class="m-4">
 			  <div class="form-row">
 			    <div class="col-md-6 mb-3">
 			      <label for="validationDefault01">Nombre(s)</label>
@@ -91,14 +81,58 @@
 			  </div>
 			  <div class="form-group">
 			    <div class="form-check">
-			      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-			      <label class="form-check-label" for="invalidCheck2">
-			        Agree to <a href="termsAndConditions.html">terms and conditions</a>
-			      </label>
 			    </div>
 			  </div>
-			  <button class="btn btn-primary" type="submit">Submit form</button>
+			  <button class="btn btn-primary" type="submit">Guardar cambios</button>
 			</form>
+
+
+			<div class="card mb-3" style="max-width: 540px;">
+		  <div class="row no-gutters">
+		    <div class="col-md-4">
+		      <img src="img/card.png" class="card-img" alt="...">
+		    </div>
+		    <div class="col-md-8">
+		      <div class="card-body">
+		        <h5 class="card-title">Ingrese datos de la tarjeta</h5>
+		        
+		        	<form class="mx-auto" action="ticket.html">
+					  <div class="form-row">
+					    <div class="col-md-6 mb-3">
+					      <label for="validationDefault01">Numero de la tarjeta</label>
+					      <input type="text" class="form-control" id="validationDefault01" required>
+					    </div>
+					    <div class="col-md-6 mb-3">
+					      <label for="validationDefault02">Nombre y apellido</label>
+					      <input type="text" class="form-control" id="validationDefault02" required>
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="col-md-6 mb-3">
+					      <label for="validationDefault03">Fecha de expiracion</label>
+					      <input type="text" class="form-control" id="validationDefault03" required>
+					    </div>
+					    <div class="col-md-6 mb-3">
+					      <label for="validationDefault03">Codigo de seguridad</label>
+					      <input type="text" class="form-control" id="validationDefault03" required>
+					    </div>
+					  </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="form-check">
+					      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+					      <label class="form-check-label" for="invalidCheck2">
+					        Agree to <a href="termsAndConditions.html" style="color: blue;">terms and conditions</a>
+					      </label>
+					    </div>
+					  </div>
+					  <button class="btn btn-danger m-3 btn2" type="submit">Guardar informacion</button>
+					</form>
+
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		</div>
 	</div>
 

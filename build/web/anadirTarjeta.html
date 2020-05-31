@@ -3,11 +3,26 @@
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<title>Agregar tarejeta</title>
+	<style type="text/css">
+		.a2{
+			color: #DFDFDF;
+		}
+		.btn3{
+			border: 1.2px solid #ff5200;
+			border-radius: 4px;
+		}
+		.btn2{
+			background: #ff5200;
+		}
+		#tarjeta{
+			margin-top: 10%; 
+		}
+	</style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-md navbar-danger bg-danger">
 		<div class="container">
-			<a href="#" class="navbar-brand">
+			<a href="home.html" class="navbar-brand a2">
 				App
 			</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
@@ -15,17 +30,22 @@
 		</button>
 			<div class="collapse navbar-collapse" id="secondNavbar">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-					<li class="nav-item"><a href="nav-link" href="#"><i class="fas fa-shopping-basket m-2"></i></a></li>
+					<li class="nav-item"><a class="nav-link a2" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link a2" href="#">Service</a></li>
+					<li class="nav-item"><a class="nav-link a2" href="#">About</a></li>
+					<li class="nav-item"><a class="nav-link a2" href="#">Contact</a></li>
+					<li class="nav-item"><a href="nav-link a2" href="#"><i class="fas fa-shopping-basket m-2"></i></a></li>
 				</ul>
+				<form class="form-inline">
+					<input type="text" class="form-control" placeholder="Search">
+					<button class="btn btn-outline-warning ml-2">Buscar</button>
+				</form>
 			</div>
 		</div>
 	</nav>
 	<!-- ___________________________________ -->
 
-	<div class="container mt-5 mx-auto">
+	<div class="container mx-auto" id="tarjeta">
 		<div class="card mb-3" style="max-width: 540px;">
 		  <div class="row no-gutters">
 		    <div class="col-md-4">
@@ -34,7 +54,7 @@
 		    <div class="col-md-8">
 		      <div class="card-body">
 		        <h5 class="card-title">Ingrese datos de la tarjeta</h5>
-		        
+		        <!-- formulario de la tarjet-->
 		        	<form class="mx-auto" action="ticket.html">
 					  <div class="form-row">
 					    <div class="col-md-6 mb-3">
@@ -61,13 +81,13 @@
 					    <div class="form-check">
 					      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
 					      <label class="form-check-label" for="invalidCheck2">
-					        Agree to terms and conditions
+					        Agree to <a href="termsAndConditions.html">terms and conditions</a>
 					      </label>
 					    </div>
 					  </div>
-					  <button class="btn btn-primary m-3" type="submit">Finalizar compra</button>
-					  <button class="btn btn-outline-primary" onclick="menu()">Cancelar compra</button>
+					  <button class="btn btn-danger m-3 btn2" type="submit">Finalizar compra</button>
 					</form>
+					<button class="btn btn3" onclick="menu()">Cancelar compra</button>
 
 		      </div>
 		    </div>
@@ -77,7 +97,12 @@
 
 	<script type="text/javascript">
 		function menu(){
-			window.location.replace("home.html");
+			aux = confirm('¡Queire cancelar su compra?');
+			if(aux){
+				window.location.replace("home.html");
+			}else{
+
+			}
 		}
 	</script>
 </body>

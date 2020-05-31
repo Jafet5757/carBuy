@@ -4,7 +4,8 @@
     Author     : kcram
 --%>
 
-<%@page import="com.marcojafet.cc.model.Cliente"%>
+
+<%@page import="com.carBuy.utils.model.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,8 +18,13 @@
     />
     <title>Login</title>
     <style type="text/css">
-      form {
-        border-radius: 6px;
+      .nav-link{
+        color: #CECECE;
+      }
+      .navbar-brand{
+        color: #CECECE;
+      }
+      #formula {
         background-color: white;
         padding: 7px;
         position: relative;
@@ -33,37 +39,36 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <div class="container">
-        <a href="#" class="navbar-brand">
-          App
-        </a>
-        <button
-          class="navbar-toggler"
-          data-toggle="collapse"
-          data-target="#secondNavbar"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="secondNavbar">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-            <li class="nav-item">
-              <a href="nav-link" href="#"
-                ><i class="fas fa-shopping-basket m-2"></i
-              ></a>
-            </li>
-          </ul>
-        </div>
+    
+   <nav class="navbar navbar-expand-md navbar-danger bg-danger">
+    <div class="container">
+      <a href="home.html" class="navbar-brand">
+        App
+      </a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      <div class="collapse navbar-collapse" id="secondNavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="count.html">mi cuenta</a></li>
+          <li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
+          <li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
+          <li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
+        </ul>
+        <form class="form-inline">
+          <input type="text" class="form-control" placeholder="Search">
+          <button class="btn btn-outline-warning ml-2">Buscar</button>
+        </form>
       </div>
-    </nav>
+    </div>
+  </nav>
+
     <!--_________________________________________ -->
 
     <div class="container mx-auto m-5">
       <div class="row mx-auto">
-        <form action="ClienteController" method="post">
+        <form action="ClienteController" id="formula" method="post">
           <input type="hidden" value="crearUsuario" name="command" />
           <%
               Cliente usuario =(Cliente)request.getAttribute("usuario");
