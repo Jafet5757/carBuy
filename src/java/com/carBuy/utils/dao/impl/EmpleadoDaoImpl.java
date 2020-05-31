@@ -105,7 +105,7 @@ public class EmpleadoDaoImpl implements EmpleadoDaoAPI{
             }else{
                 PreparedStatement ps =con.prepareStatement("select * from empleado "
                     + "where id_emp=? "
-                    + "and pass_cli=?");
+                    + "and pass_emp=?");
                 ps.setString(1, id);
                 ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();

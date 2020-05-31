@@ -49,7 +49,7 @@
       <div class="collapse navbar-collapse" id="secondNavbar">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="count.html">mi cuenta</a></li>
+          <li class="nav-item"><a class="nav-link" href="login_cli.html">iniciar sesion</a></li>
           <li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
           <li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
           <li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
@@ -80,7 +80,7 @@
         %>
           <div class="form-row">
             <div class="col-md-6 mb-3">
-              <label for="validationDefault01">Nombre de Usuario</label>
+              <label for="validationDefault01">Nombre de usuario</label>
               <input
                 type="text"
                 class="form-control"

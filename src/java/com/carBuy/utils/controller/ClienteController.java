@@ -59,13 +59,18 @@ public class ClienteController extends HttpServlet {
                         cliente.setDir_cli(request.getParameter("dir_cli"));
                         cliente.setTel_cli(request.getParameter("tel_cli"));
                         cliente.setCel_cli(request.getParameter("cel_cli"));
-                        cliente.setPass_cli(request.getParameter("pass_cli_org"));
-                        cliente = clienteServiceImpl.save(cliente, con);
-                        request.setAttribute("usuario", cliente);
-                        request.getRequestDispatcher("loginRes.jsp").forward(request, response);
+                        if((request.getParameter("pass_cli_org")).equals(request.getParameter("pass_cli_cop"))){
+                            cliente.setPass_cli(request.getParameter("pass_cli_org"));
+                            cliente = clienteServiceImpl.save(cliente, con);
+                            request.setAttribute("usuario", cliente);
+                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                        }else{
+                            request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
+                            request.getRequestDispatcher("regRes_cli.jsp").forward(request, response);
+                        }
                     } catch (Exception ex) {
-                        request.setAttribute("usuario", null);
-                        request.getRequestDispatcher("loginRes.jsp").forward(request, response);
+                        request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
+                        request.getRequestDispatcher("regRes_cli.jsp").forward(request, response);
                     }
                 break;
                 case "iniciarSesion":

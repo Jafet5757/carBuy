@@ -74,11 +74,16 @@ public class EmpleadoController extends HttpServlet {
                         String id = (request.getParameter("id"));
                         String pass = (request.getParameter("pass"));
                         empleado = empleadoServiceImpl.get(id, pass, con);
-                        request.getSession().setAttribute("usuario", empleado);
-                        request.getRequestDispatcher("index.jsp").forward(request, response);
+                        if(empleado != null){
+                            request.getSession().setAttribute("usuario", empleado);
+                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                        }else{
+                            request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
+                            request.getRequestDispatcher("loginRes_emp.jsp").forward(request, response);
+                        }
                     } catch (Exception ex) {
-                        request.setAttribute("usuario", null);
-                        request.getRequestDispatcher("index.jsp").forward(request, response);
+                        request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
+                        request.getRequestDispatcher("loginRes_emp.jsp").forward(request, response);
                     }
                 break;
                 case "borraCuenta":

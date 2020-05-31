@@ -1,9 +1,11 @@
+<%-- 
+    Document   : loginRes_emp
+    Created on : 31/05/2020, 12:08:59 PM
+    Author     : kcram
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
   <head>
     <link
@@ -48,7 +50,7 @@ and open the template in the editor.
       <div class="collapse navbar-collapse" id="secondNavbar">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="count.html">mi cuenta</a></li>
+          <li class="nav-item"><a class="nav-link" href="login_cli.html">iniciar sesion</a></li>
           <li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
           <li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
           <li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
@@ -65,11 +67,21 @@ and open the template in the editor.
 
     <div class="container mx-auto m-5">
       <div class="row mx-auto">
-        <form action="ClienteController" id="formula" method="post">
+        <form action="EmpleadoController" id="formula" method="post">
+        <%
+              String msg =(String)request.getAttribute("msg");
+              if(msg!=null){
+          %>
+            <div class="alert alert-danger" role="alert">
+                <%=msg%>
+            </div>
+        <%
+            }
+        %>
           <input type="hidden" value="iniciarSesion" name="command"/>
           <div class="form-row">
             <div class="col-md-6 mb-3">
-              <label for="validationDefault01">Nombre de Usuario</label>
+              <label for="validationDefault01">Nombre de usuario</label>
               <input
                 type="text"
                 class="form-control"
@@ -90,7 +102,8 @@ and open the template in the editor.
             </div>
           </div>
           <button class="btn btn-primary" type="submit">Enviar</button>
-          <a href="login_emp.html"><button type="button" class="btn btn-secondary">Entrar como empleado</button></a>
+          <a href="login_emp.html"><button type="button" class="btn btn-secondary">Entrar como cliente</button></a>
+          <a href="reg_cli.html"><button type="button" class="btn btn-info">Registrarse</button></a>
         </form>
       </div>
     </div>

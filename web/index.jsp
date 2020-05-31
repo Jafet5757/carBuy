@@ -4,12 +4,20 @@
     Author     : kcram
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="javax.sql.DataSource"%>
+<%@page import="javax.annotation.Resource"%>
 <%@page import="com.carBuy.utils.model.Empleado"%>
 <%@page import="com.carBuy.utils.model.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
     Cliente cliente = null;
     Empleado empleado = null;
+    @Resource(name="jdbc/dbPool")
+    private DataSource datasource;
 %>
 <!DOCTYPE html>
 <html>
@@ -50,7 +58,7 @@
 
 	<nav class="navbar navbar-expand-md navbar-danger bg-danger">
 		<div class="container">
-			<a href="home.html" class="navbar-brand">
+			<a href="index.jsp" class="navbar-brand">
 				carBuy
 			</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
@@ -58,7 +66,7 @@
 		</button>
 			<div class="collapse navbar-collapse" id="secondNavbar">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
                                         <%  
                                             try{
                                                 cliente = (Cliente)request.getSession().getAttribute("usuario");
@@ -72,7 +80,7 @@
                                         <%
                                             }else{
                                         %>
-                                        <li class="nav-item"><a class="nav-link" href="login.html">iniciar sesion</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="login_cli.html">iniciar sesion</a></li>
                                         <%
                                             }
                                         %>
@@ -115,81 +123,64 @@
 
 	<!-- _____________________________________ -->
 
+        	<div class="container mx-auto">
+                    <%
+try{
+    Connection con = datasource.getConnection();
+    String sql = "select * from DProductos";
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery(sql);
+    if(!rs.next()){
+                    %>
+                        <div class="alert alert-info" role="alert">
+                            Lo sentimos. Por el momento no hay productos en venta
+                        </div>
+                    <%
+    }else{
+%>
+                    <div class="row m-3">
+                    <%
+    rs.beforeFirst();
+        while(rs.next()){
+            int stk = rs.getInt("stock_prod");
+                if(stk>0){
+                    int mprod = rs.getInt("id_mprod");
+                    sql = "select * from MProductos where id_mprod='"+String.valueOf(mprod)+"'";
+                    Statement st2 = con.createStatement();
+                    ResultSet rs2 = st2.executeQuery(sql);
+                    while(rs2.next()){
+                            %>
+                            <div class="card m-3" style="width: 18rem;">
+                            <img src="<%=rs2.getString("img_prod")%>" class="card-img-top" alt="...">
 
-	<div class="container mx-auto">
-		<div class="row m-3">
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://cdn.pixabay.com/photo/2016/05/18/10/52/buick-1400243_960_720.jpg" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://th.bing.com/th/id/OIP.Kv8x6E82ZqStaxaRkvaqGwHaEK?w=273&h=160&c=7&o=5&pid=1.7" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://th.bing.com/th/id/OIP.5BDKkXcd5_8wvS03ctywHwHaEK?w=262&h=160&c=7&o=5&pid=1.7" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://th.bing.com/th/id/OIP.H-ocSonsMxB_9V-kkNuQcwHaEE?w=299&h=164&c=7&o=5&pid=1.7" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://cdn.pixabay.com/photo/2016/05/18/10/52/buick-1400243_960_720.jpg" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://th.bing.com/th/id/OIP.Kv8x6E82ZqStaxaRkvaqGwHaEK?w=273&h=160&c=7&o=5&pid=1.7" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://th.bing.com/th/id/OIP.5BDKkXcd5_8wvS03ctywHwHaEK?w=262&h=160&c=7&o=5&pid=1.7" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-
-			<div class="card m-3" style="width: 18rem;">
-			  <img src="https://th.bing.com/th/id/OIP.H-ocSonsMxB_9V-kkNuQcwHaEE?w=299&h=164&c=7&o=5&pid=1.7" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <a href="description.html" class="btn btn-danger btn2">Go somewhere</a>
-			  </div>
-			</div>
-		</div>
+                                <div class="card-body">
+                                  <h5 class="card-title"><%=rs2.getString("nom_prod")%></h5>
+                                  <p class="card-text"><%=rs2.getString("des_prod")%></p>
+                                  <form action="description.jsp" method="post">
+                                      <input type="hidden" value="<%=rs2.getInt("id_mprod")%>" name="id"/>
+                                      <input type="submit" class="btn btn-danger btn2" value="Mas"></button>
+                                  </form>
+                                </div>
+                              </div>
+                              <br/>
+                    <%
+                                }
+                            }
+                        }
+%>
+                    
+</div>
+                              <%
+                        }
+con.close();
+}catch(SQLException ex){
+%>
+                        <div class="alert alert-info" role="alert">
+                            Lo sentimos. Por el momento no hay productos en venta
+                        </div>
+                        <%
+}
+                    %>
 	</div>
 
 	<footer>
