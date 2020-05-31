@@ -1,9 +1,11 @@
+<%-- 
+    Document   : loginRes
+    Created on : 31/05/2020, 10:22:46 AM
+    Author     : kcram
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
   <head>
     <link
@@ -21,7 +23,6 @@ and open the template in the editor.
         color: #CECECE;
       }
       #formula {
-        border-radius: 4px;
         background-color: white;
         padding: 7px;
         position: relative;
@@ -36,11 +37,11 @@ and open the template in the editor.
     </style>
   </head>
   <body>
-
-    <nav class="navbar navbar-expand-md navbar-danger bg-danger">
+    
+   <nav class="navbar navbar-expand-md navbar-danger bg-danger">
     <div class="container">
-      <a href="index.jsp" class="navbar-brand">
-        carBuy
+      <a href="home.html" class="navbar-brand">
+        App
       </a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
       <span class="navbar-toggler-icon"></span>
@@ -66,7 +67,17 @@ and open the template in the editor.
     <div class="container mx-auto m-5">
       <div class="row mx-auto">
         <form action="ClienteController" id="formula" method="post">
-          <input type="hidden" value="iniciarSesion" name="command"/>
+          <input type="hidden" value="iniciarSesion" name="command" />
+          <%
+              String msg =(String)request.getAttribute("msg");
+              if(msg!=null){
+          %>
+            <div class="alert alert-danger" role="alert">
+                <%=msg%>
+            </div>
+        <%
+            }
+        %>
           <div class="form-row">
             <div class="col-md-6 mb-3">
               <label for="validationDefault01">Nombre de Usuario</label>

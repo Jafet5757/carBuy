@@ -11,21 +11,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.annotation.Resource;
-import javax.sql.DataSource;
 import java.sql.Date;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 
 /**
  *
  * @author kcram
  */
-@WebServlet(name = "ClienteDaoImpl", urlPatterns = {"/ClienteDaoImpl"})
-public class ClienteDaoImpl extends HttpServlet implements ClienteDaoAPI{
-    
-    @Resource(name="jdbc/dbPool")
-    private DataSource datasource;
+public class ClienteDaoImpl implements ClienteDaoAPI{
 
     @Override
     public Cliente save(Cliente cliente, Connection con) throws SQLException{
@@ -111,10 +103,11 @@ public class ClienteDaoImpl extends HttpServlet implements ClienteDaoAPI{
             }else{
                 PreparedStatement ps =con.prepareStatement("select * from cliente "
                     + "where id_cli=? "
-                    + "and password=?");
+                    + "and pass_cli=?");
                 ps.setString(1, id);
                 ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
+                rs.next();
                 Cliente cliente = new Cliente();
                 cliente.setId_cli(rs.getString("id_cli"));
                 cliente.setNom_cli(rs.getString("nom_cli"));
@@ -129,6 +122,7 @@ public class ClienteDaoImpl extends HttpServlet implements ClienteDaoAPI{
                 return cliente;
             }
         }catch(SQLException ex){
+            System.out.println(ex);
             return null;
         }
     }
@@ -141,7 +135,7 @@ public class ClienteDaoImpl extends HttpServlet implements ClienteDaoAPI{
             ps.setString(1, id);
             ps.setString(2, pass);
             ResultSet rs =ps.executeQuery();
-            if(rs.wasNull()){
+            if(!rs.next()){
                 ps.close();
                 return false;
             }else{

@@ -1,3 +1,16 @@
+<%-- 
+    Document   : index
+    Created on : 31/05/2020, 10:09:21 AM
+    Author     : kcram
+--%>
+
+<%@page import="com.carBuy.utils.model.Empleado"%>
+<%@page import="com.carBuy.utils.model.Cliente"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%!
+    Cliente cliente = null;
+    Empleado empleado = null;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,15 +51,31 @@
 	<nav class="navbar navbar-expand-md navbar-danger bg-danger">
 		<div class="container">
 			<a href="home.html" class="navbar-brand">
-				App
+				carBuy
 			</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 			<div class="collapse navbar-collapse" id="secondNavbar">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="count.html">mi cuenta</a></li>
+					<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                        <%  
+                                            try{
+                                                cliente = (Cliente)request.getSession().getAttribute("usuario");
+                                            }catch(Exception ex){}
+                                            try{
+                                                empleado = (Empleado)request.getSession().getAttribute("usuario");
+                                            }catch(Exception ex){}
+                                            if(cliente!=null || empleado!=null){
+                                        %>
+					<li class="nav-item"><a class="nav-link" href="account.html">mi cuenta</a></li>
+                                        <%
+                                            }else{
+                                        %>
+                                        <li class="nav-item"><a class="nav-link" href="login.html">iniciar sesion</a></li>
+                                        <%
+                                            }
+                                        %>
 					<li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
 					<li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
 					<li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>

@@ -46,7 +46,8 @@ public class ClienteController extends HttpServlet {
             String instruction = request.getParameter("command");
             switch (instruction){
                 case "crearUsuario":
-                    try (Connection con = datasource.getConnection();){
+                    try{
+                        Connection con = datasource.getConnection();
                         Cliente cliente = new Cliente();
                         cliente.setId_cli(request.getParameter("id_cli"));
                         cliente.setNom_cli(request.getParameter("nom_cli"));
@@ -68,7 +69,23 @@ public class ClienteController extends HttpServlet {
                     }
                 break;
                 case "iniciarSesion":
-                    
+                    try {
+                        Connection con = datasource.getConnection();
+                        Cliente cliente = new Cliente();
+                        String id = (request.getParameter("id"));
+                        String pass = (request.getParameter("pass"));
+                        cliente = clienteServiceImpl.get(id, pass, con);
+                        if(cliente != null){
+                            request.getSession().setAttribute("usuario", cliente);
+                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                        }else{
+                            request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
+                            request.getRequestDispatcher("loginRes_cli.jsp").forward(request, response);
+                        }
+                    } catch (Exception ex) {
+                        request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
+                        request.getRequestDispatcher("loginRes_cli.jsp").forward(request, response);
+                    }
                 break;
                 case "borraCuenta":
                     

@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
   <head>
     <link
@@ -34,8 +39,8 @@
 
     <nav class="navbar navbar-expand-md navbar-danger bg-danger">
     <div class="container">
-      <a href="home.html" class="navbar-brand">
-        App
+      <a href="index.jsp" class="navbar-brand">
+        carBuy
       </a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
       <span class="navbar-toggler-icon"></span>
@@ -60,8 +65,9 @@
 
     <div class="container mx-auto m-5">
       <div class="row mx-auto">
-        <form action="ClienteController" id="formula" method="post">
+        <form action="EmpleadoController" id="formula" method="post">
           <input type="hidden" value="crearUsuario" name="command" />
+          <input type="hidden" value="iniciarSesion" name="command"/>
           <div class="form-row">
             <div class="col-md-6 mb-3">
               <label for="validationDefault01">Nombre de Usuario</label>
@@ -69,125 +75,23 @@
                 type="text"
                 class="form-control"
                 id="validationDefault01"
-                name="id_cli"
+                name="id"
                 required
               />
             </div>
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault01">Nombre(s)</label>
-              <input
-                type="text"
-                class="form-control"
-                id="validationDefault01"
-                name="nom_cli"
-                required
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault02">Apellido paterno</label>
-              <input
-                type="text"
-                class="form-control"
-                id="validationDefault02"
-                name="app_cli"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault03">Apellido materno</label>
-              <input
-                type="text"
-                class="form-control"
-                id="validationDefault03"
-                name="apm_cli"
-                required
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault03">Fecha de nacimiento</label>
-              <input
-                type="date"
-                class="form-control"
-                id="validationDefault03"
-                name="fnac_cli"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault01">Direccion</label>
-              <input
-                type="text"
-                class="form-control"
-                id="validationDefault01"
-                name="dir_cli"
-                required
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault01">Telefono</label>
-              <input
-                type="text"
-                class="form-control"
-                id="validationDefault01"
-                name="tel_cli"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault01">Celular</label>
-              <input
-                type="text"
-                class="form-control"
-                id="validationDefault01"
-                name="cel_cli"
-                required
-              />
-            </div>
-          </div>
-          <div class="form-row">
             <div class="col-md-6 mb-3">
               <label for="validationDefault02">Contraseña</label>
               <input
                 type="password"
                 class="form-control"
                 id="validationDefault02"
-                name="pass_cli_org"
+                name="pass"
                 required
               />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="validationDefault02">Repetir Contraseña</label>
-              <input
-                type="password"
-                class="form-control"
-                id="validationDefault02"
-                name="pass_cli_cop"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="invalidCheck2"
-                required
-              />
-              <label class="form-check-label" for="invalidCheck2">
-                Agree to <a href="#">terms and conditions</a>
-              </label>
             </div>
           </div>
           <button class="btn btn-primary" type="submit">Enviar</button>
+          <a href="login_emp.html"><button type="button" class="btn btn-secondary">Entrar como cliente</button></a>
         </form>
       </div>
     </div>

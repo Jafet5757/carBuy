@@ -5,9 +5,9 @@
  */
 package com.carBuy.utils.service.impl;
 
-import com.carBuy.utils.dao.impl.ClienteDaoImpl;
-import com.carBuy.utils.model.Cliente;
-import com.carBuy.utils.service.ClienteServiceAPI;
+import com.carBuy.utils.dao.impl.EmpleadoDaoImpl;
+import com.carBuy.utils.model.Empleado;
+import com.carBuy.utils.service.EmpleadoServiceAPI;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
@@ -17,19 +17,19 @@ import java.util.regex.Pattern;
  *
  * @author kcram
  */
-public class ClienteServiceImpl implements ClienteServiceAPI{
+public class EmpleadoServiceImpl implements EmpleadoServiceAPI{
     
-    private ClienteDaoImpl clienteDaoImpl = new ClienteDaoImpl() {};
+    private EmpleadoDaoImpl empleadoDaoImpl = new EmpleadoDaoImpl() {};
     
     private Pattern noNumbs = Pattern.compile("[^\\p{Punct}\\p{Digit}]+");
     private Pattern noLetts = Pattern.compile("[^\\p{Punct}\\p{Alpha}]+");
     private Pattern noStndr = Pattern.compile("[^();''*--]+");
-    
+
     @Override
-    public Cliente save(Cliente cliente, Connection con) throws SQLException {
-        if(checkClient(cliente)){
+    public Empleado save(Empleado empleado, Connection con) throws SQLException {
+        if(checkEmp(empleado)){
             try{
-                return clienteDaoImpl.save(cliente, con);
+                return empleadoDaoImpl.save(empleado, con);
             }catch(SQLException ex){
                 return null;
             }finally{
@@ -44,7 +44,7 @@ public class ClienteServiceImpl implements ClienteServiceAPI{
     public boolean delete(String id, String pass, Connection con) throws SQLException {
         if(checkKeys(id, pass)){
             try{
-                return clienteDaoImpl.delete(id, pass, con);
+                return empleadoDaoImpl.delete(id, pass, con);
             }catch(SQLException ex){
                 return false;
             }finally{
@@ -56,10 +56,10 @@ public class ClienteServiceImpl implements ClienteServiceAPI{
     }
 
     @Override
-    public Cliente modify(String id, String pass, Cliente cliente, Connection con) throws SQLException {
-        if(checkClient(cliente) && checkKeys(id, pass)){
+    public Empleado modify(String id, String pass, Empleado empleado, Connection con) throws SQLException {
+        if(checkEmp(empleado) && checkKeys(id, pass)){
             try{
-                return clienteDaoImpl.modify(id, pass, cliente, con);
+                return empleadoDaoImpl.modify(id, pass, empleado, con);
             }catch(SQLException ex){
                 return null;
             }finally{
@@ -71,10 +71,10 @@ public class ClienteServiceImpl implements ClienteServiceAPI{
     }
 
     @Override
-    public Cliente get(String id, String pass, Connection con) throws SQLException {
+    public Empleado get(String id, String pass, Connection con) throws SQLException {
         if(checkKeys(id, pass)){
             try{
-                return clienteDaoImpl.get(id, pass, con);
+                return empleadoDaoImpl.get(id, pass, con);
             }catch(SQLException ex){
                 return null;
             }finally{
@@ -85,25 +85,25 @@ public class ClienteServiceImpl implements ClienteServiceAPI{
         }
     }
     
-    private boolean checkClient(Cliente cliente){
-        String id_cli = cliente.getId_cli();
-        String nom_cli = cliente.getNom_cli();
-        String app_cli = cliente.getApp_cli();
-        String apm_cli = cliente.getApm_cli();
-        String dir_cli = cliente.getDir_cli();
-        String tel_cli = cliente.getTel_cli();
-        String cel_cli = cliente.getCel_cli();
-        String pass_cli = cliente.getPass_cli();
-        if(id_cli.length()<31 && nom_cli.length()<21 && app_cli.length()<21 && apm_cli.length()<21
-                && dir_cli.length()<101 && tel_cli.length()<13 && cel_cli.length()<13 && pass_cli.length()<51){
-            Matcher mat1 = noStndr.matcher(id_cli);
-            Matcher mat2 = noNumbs.matcher(nom_cli);
-            Matcher mat3 = noNumbs.matcher(app_cli);
-            Matcher mat4 = noNumbs.matcher(apm_cli);
-            Matcher mat6 = noStndr.matcher(dir_cli);
-            Matcher mat7 = noLetts.matcher(tel_cli);
-            Matcher mat8 = noLetts.matcher(cel_cli);
-            Matcher mat9 = noStndr.matcher(pass_cli);
+    private boolean checkEmp(Empleado empleado){
+        String id_emp = empleado.getId_emp();
+        String nom_emp = empleado.getNom_emp();
+        String app_emp = empleado.getApp_emp();
+        String apm_emp = empleado.getApm_emp();
+        String dir_emp = empleado.getDir_emp();
+        String tel_emp = empleado.getTel_emp();
+        String cel_emp = empleado.getCel_emp();
+        String pass_emp = empleado.getPass_emp();
+        if(id_emp.length()<31 && nom_emp.length()<21 && app_emp.length()<21 && apm_emp.length()<21
+                && dir_emp.length()<101 && tel_emp.length()<13 && cel_emp.length()<13 && pass_emp.length()<51){
+            Matcher mat1 = noStndr.matcher(id_emp);
+            Matcher mat2 = noNumbs.matcher(nom_emp);
+            Matcher mat3 = noNumbs.matcher(app_emp);
+            Matcher mat4 = noNumbs.matcher(apm_emp);
+            Matcher mat6 = noStndr.matcher(dir_emp);
+            Matcher mat7 = noLetts.matcher(tel_emp);
+            Matcher mat8 = noLetts.matcher(cel_emp);
+            Matcher mat9 = noStndr.matcher(pass_emp);
             if(mat1.matches() && mat2.matches() && mat3.matches() && mat4.matches()
                     && mat6.matches() && mat7.matches() && mat8.matches() && mat9.matches()){
                 return true;
@@ -125,4 +125,5 @@ public class ClienteServiceImpl implements ClienteServiceAPI{
             return false;
         }
     }
+    
 }
