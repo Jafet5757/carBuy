@@ -76,7 +76,8 @@
                                             }catch(Exception ex){}
                                             if(cliente!=null || empleado!=null){
                                         %>
-					<li class="nav-item"><a class="nav-link" href="account.html">mi cuenta</a></li>
+					<li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
                                         <%
                                             }else{
                                         %>
@@ -85,13 +86,8 @@
                                             }
                                         %>
 					<li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
-					<li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
 					<li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
 				</ul>
-				<form class="form-inline">
-					<input type="text" class="form-control" placeholder="Search">
-					<button class="btn btn-outline-warning ml-2">Buscar</button>
-				</form>
 			</div>
 		</div>
 	</nav>
