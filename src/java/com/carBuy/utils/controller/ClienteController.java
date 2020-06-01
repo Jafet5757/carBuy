@@ -5,9 +5,11 @@
  */
 package com.carBuy.utils.controller;
 
+import com.carBuy.utils.dao.impl.CCarritoCDaoImpl;
 import com.carBuy.utils.model.Cliente;
 import com.carBuy.utils.service.impl.ClienteServiceImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -17,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -43,6 +48,7 @@ public class ClienteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            PrintWriter out = response.getWriter();
             String instruction = request.getParameter("command");
             switch (instruction){
                 case "crearUsuario":
@@ -93,10 +99,58 @@ public class ClienteController extends HttpServlet {
                     }
                 break;
                 case "borraCuenta":
-                    
+                {
+                    try {
+                        Connection con = datasource.getConnection();
+                        CCarritoCDaoImpl ccc=new CCarritoCDaoImpl();
+                        String id = request.getParameter("id_cli");
+                        String password = request.getParameter("pass_cli_org");
+                        boolean exito = clienteServiceImpl.delete(id, password, con);
+                        boolean exito2 = ccc.delete(id,con);
+                        if(exito && exito2){
+                            request.setAttribute("msg", "Informacion borrada con exito");
+                            request.getRequestDispatcher("account.jsp").forward(request, response);
+                        }else{
+                            request.setAttribute("msg", "Ha ocurrido un error desconocido");
+                            request.getRequestDispatcher("account.jsp").forward(request, response);
+                        }
+                    } catch (Exception ex) {
+                        out.println(ex);
+                        request.setAttribute("msg", "Ha ocurrido un error:"+ex);
+                        request.getRequestDispatcher("account.jsp").forward(request, response);
+                        Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
+
                 case "actualizarDatos":
-                
+                    try{
+                        Connection con = datasource.getConnection();
+                        Cliente cliente = new Cliente();
+                        cliente.setId_cli(request.getParameter("id_cli"));
+                        cliente.setNom_cli(request.getParameter("nom_cli"));
+                        cliente.setApp_cli(request.getParameter("app_cli"));
+                        cliente.setApm_cli(request.getParameter("apm_cli"));
+                        String fnac = request.getParameter("fnac_cli");
+                        LocalDate localDate = LocalDate.parse(fnac);
+                        cliente.setFnac_cli(localDate);
+                        cliente.setDir_cli(request.getParameter("dir_cli"));
+                        cliente.setTel_cli(request.getParameter("tel_cli"));
+                        cliente.setCel_cli(request.getParameter("cel_cli"));
+                        if((request.getParameter("pass_cli_org")).equals(request.getParameter("pass_cli_cop"))){
+                            cliente.setPass_cli(request.getParameter("pass_cli_org"));
+                            cliente = clienteServiceImpl.modify(cliente.getId_cli(), cliente.getPass_cli(),cliente,con);
+                            request.setAttribute("usuario", cliente);
+                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                        }else{
+                            request.setAttribute("msg", "La contraseña no coincide");
+                            request.getRequestDispatcher("account.jsp").forward(request, response);
+                        }
+                    } catch (Exception ex) {
+                        out.println(ex);
+                        request.setAttribute("msg", "Ocurrio un error:"+ex);
+                        request.getRequestDispatcher("account.jsp").forward(request, response);
+                    }
                 break;
 
 
