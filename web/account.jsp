@@ -68,108 +68,137 @@
                                         
         	<div class="container mx-auto m-5">
 		<div class="row mx-auto">
+            <form action="ClienteController" method="post">
                     <div class="form-row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col">
                           Mi cuenta
                         </div>
                     </div>
                     <%if(cliente!=null){%>
                     <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                          Usuario: <%=cliente.getId_cli()%>
+                        <div class="col">
+                          Usuario: <br> 
+                          <input type="text" name="id_cli" value=<%=cliente.getId_cli()%>>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                          Nombre: <%=cliente.getNom_cli()%>
+
+                        <div class="col">
+                          Nombre: <br>
+                          <input type="text" name="nom_cli" value=<%=cliente.getNom_cli()%>>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Apellido Paterno: <%=cliente.getApp_cli()%>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Apellido Materno: <%=cliente.getApm_cli()%>
-                        </div>
-                    </div>
-                        <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Fecha de nacimiento: <%=cliente.getFnac_cli()%>
+
+                        <div class="col">
+                          Apellido Paterno: <br>
+                          <input type="text" name="app_cli" value=<%=cliente.getApp_cli()%>>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Direccion: <%=cliente.getDir_cli()%>
+                        <div class="col">
+                          Apellido Materno: <br>
+                          <input type="text" name="apm_cli" value=<%=cliente.getApm_cli()%>>
+                        </div>
+
+                        <div class="col">
+                          Fecha de nacimiento: <br>
+                          <input type="text" name="fnac_cli" value=<%=cliente.getFnac_cli()%>>
+                        </div>
+
+                        <div class="col">
+                          Direccion: <br>
+                          <input type="text" name="dir_cli" value=<%=cliente.getDir_cli()%>>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Telefono fijo: <%=cliente.getTel_cli()%>
+                        <div class="col">
+                          Telefono fijo: <br>
+                          <input type="text" name="tel_cli" value=<%=cliente.getTel_cli()%>>
+                        </div>
+
+                        <div class="col">
+                          Telefono celular: 
+                          <input type="text" name="cel_cli" value=<%=cliente.getCel_cli()%>>
+                        </div>
+                        
+                        <div class="col">
+                            Contraseña:<br>
+                            <input type="hidden" name="pass_cli_cop" value=<%=cliente.getPass_cli()%>>
+                            <input type="password" name="pass_cli_org" value=<%=cliente.getPass_cli()%>>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Telefono celular: <%=cliente.getCel_cli()%>
-                        </div>
-                    </div>
+                    <input type="hidden" value="actualizarDatos" name="command"/>
+                    <button class="btn btn-warning m-3 btn2" type="submit">Guardar cambios</button>
+
+                        <hr>
+
                     <%}else{%>
+
+                        <hr>
+
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col">
                           Mi cuenta
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Usuario: <%=empleado.getId_emp()%>
+
+                        <div class="col">
+                          Usuario: <br>
+                          <input type="text" name="" value=<%=empleado.getId_emp()%>>
+                        </div>
+
+                        <div class="col">
+                          Nombre: <br>
+                          <input type="text" name="" value=<%=empleado.getNom_emp()%>>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Nombre: <%=empleado.getNom_emp()%>
+                        <div class="col">
+                          Apellido Paterno: <br>
+                          <input type="text" name="" value=<%=empleado.getApp_emp()%>>
+                        </div>
+
+                        <div class="col">
+                          Apellido Materno: <br>
+                          <input type="text" name="" value=<%=empleado.getApm_emp()%>>
+                        </div>
+
+                        <div class="col">
+                          Fecha de nacimiento: <br>
+                          <input type="text" name="" value=<%=empleado.getFnac_emp()%>>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Apellido Paterno: <%=empleado.getApp_emp()%>
+                        <div class="col">
+                          Direccion: <br>
+                          <input type="text" name="" value=<%=empleado.getDir_emp()%>>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Apellido Materno: <%=empleado.getApm_emp()%>
+
+                        <div class="col">
+                          Telefono fijo: <br>
+                          <input type="text" name="" value=<%=empleado.getTel_emp()%>>
+                        </div>
+
+                        <div class="col">
+                          Telefono celular: <br>
+                          <input type="text" name="" value=<%=empleado.getCel_emp()%>>
                         </div>
                     </div>
                         <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Fecha de nacimiento: <%=empleado.getFnac_emp()%>
+                            <div class="col">
+                                Contraseña:<br>
+                                <input type="hidden" name="pass_cli_cop" value=<%=empleado.getPass_emp()%>>
+                                <input type="password" name="pass_cli_org" value=<%=empleado.getPass_emp()%>>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Direccion: <%=empleado.getDir_emp()%>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Telefono fijo: <%=empleado.getTel_emp()%>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                          Telefono celular: <%=empleado.getCel_emp()%>
-                        </div>
-                    </div>
+
+                    <br><br>
+                    <input type="hidden" value="actualizarDatosEmpleado" name="command"/>
+                    <button class="btn btn-warning m-3 btn2" type="submit">Guardar cambios</button>
                     <%}%>
+            </form>
 		</div>
                 <form action="ClienteController" method="post">
                     <input type="hidden" value="cerrarSesion" name="command"/>
                     <button class="btn btn-info m-3 btn2" type="submit">Cerrar Sesion</button>
                 </form>
-                <form action="ClienteController" method="post">
-                    <input type="hidden" value="actualizarDatos" name="command"/>
-                    <button class="btn btn-warning m-3 btn2" type="submit">Editar Datos</button>
-                </form>
+
                 <form action="conf_Del_cli.jsp" method="post">
                     <input type="hidden" value="borraCuenta" name="command"/>
                     <button class="btn btn-danger m-3 btn2" type="submit">Borrar Cuenta</button>
