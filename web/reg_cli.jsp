@@ -1,9 +1,19 @@
+<%-- 
+    Document   : reg_cli
+    Created on : 1/06/2020, 07:10:18 PM
+    Author     : kcram
+--%>
+
+<%@page import="com.carBuy.utils.model.Empleado"%>
+<%@page import="com.carBuy.utils.model.Cliente"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<%!
+    String msg = null;
+    Cliente cliente = null;
+    Empleado empleado = null;
+%>
+%>
 <html>
   <head>
     <link
@@ -38,6 +48,17 @@ and open the template in the editor.
   <body>
 
     <nav class="navbar navbar-expand-md navbar-danger bg-danger">
+        <%
+        try{
+            cliente = (Cliente)request.getSession().getAttribute("usuario");
+        }catch(Exception ex){}
+        try{
+            empleado = (Empleado)request.getSession().getAttribute("usuario");
+        }catch(Exception ex){}
+        if(cliente!=null || empleado!=null){
+            request.getRequestDispatcher("error_page.jsp").forward(request, response);
+        }
+        %>
     <div class="container">
       <a href="home.html" class="navbar-brand">
         App
@@ -48,9 +69,9 @@ and open the template in the editor.
       <div class="collapse navbar-collapse" id="secondNavbar">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="login_cli.html">iniciar sesion</a></li>
-          <li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
-          <li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="login_cli.jsp">iniciar sesion</a></li>
+          <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
+          <li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
         </ul>
       </div>
     </div>
@@ -62,6 +83,18 @@ and open the template in the editor.
       <div class="row mx-auto">
         <form action="ClienteController" id="formula" method="post">
           <input type="hidden" value="crearUsuario" name="command" />
+          <%
+              try{
+              msg =(String)request.getAttribute("msg");
+              }catch(Exception ex){}
+              if(msg!=null){
+          %>
+              <div class="alert alert-danger" role="alert">
+                  <%=msg%>
+              </div>
+          <%
+              }
+          %>
           <div class="form-row">
             <div class="col-md-6 mb-3">
               <label for="validationDefault01">Nombre de Usuario</label>
@@ -188,7 +221,7 @@ and open the template in the editor.
             </div>
           </div>
           <button class="btn btn-primary" type="submit">Enviar</button>
-          <a href="login_cli.html"><button type="button" class="btn btn-info">Iniciar sesion</button></a>
+          <a href="login_cli.jsp"><button type="button" class="btn btn-info">Iniciar sesion</button></a>
         </form>
       </div>
     </div>

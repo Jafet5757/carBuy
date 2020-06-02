@@ -38,7 +38,6 @@ public class ClienteDaoImpl implements ClienteDaoAPI{
             ps.close();
             return cliente;
         }catch(SQLException ex){
-            System.err.println(ex);
             return null;
         }
     }
@@ -122,7 +121,6 @@ public class ClienteDaoImpl implements ClienteDaoAPI{
                 return cliente;
             }
         }catch(SQLException ex){
-            System.out.println(ex);
             return null;
         }
     }

@@ -77,16 +77,16 @@
                                             if(cliente!=null || empleado!=null){
                                         %>
 					<li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.jsp">Historial</a></li>
                                         <%
                                             }else{
                                         %>
-                                        <li class="nav-item"><a class="nav-link" href="login_cli.html">iniciar sesion</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="login_cli.jsp">iniciar sesion</a></li>
                                         <%
                                             }
                                         %>
-					<li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
-					<li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
+					<li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
+					<li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
 				</ul>
 			</div>
 		</div>
@@ -133,10 +133,10 @@ try{
                         </div>
                     <%
     }else{
+    rs.beforeFirst();
 %>
                     <div class="row m-3">
                     <%
-    rs.beforeFirst();
         while(rs.next()){
             int stk = rs.getInt("stock_prod");
                 if(stk>0){
@@ -154,7 +154,7 @@ try{
                                   <p class="card-text"><%=rs2.getString("des_prod")%></p>
                                   <form action="description.jsp" method="post">
                                       <input type="hidden" value="<%=rs2.getInt("id_mprod")%>" name="id"/>
-                                      <input type="submit" class="btn btn-danger btn2" value="Mas"></button>
+                                      <input type="submit" class="btn btn-danger btn2" value="Mas"/>
                                   </form>
                                 </div>
                               </div>

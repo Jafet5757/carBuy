@@ -13,8 +13,6 @@
 <%!
     Cliente cliente = null;
     Empleado empleado = null;
-    @Resource(name="jdbc/dbPool")
-    private DataSource datasource;
 %>
 <html>
     <head>
@@ -47,19 +45,22 @@
                                             try{
                                                 empleado = (Empleado)request.getSession().getAttribute("usuario");
                                             }catch(Exception ex){}
+                                            if(cliente==null && empleado==null){
+                                                request.getRequestDispatcher("error_page.jsp").forward(request, response);
+                                            }else{
                                             if(cliente!=null || empleado!=null){
                                         %>
 					<li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.html">Historial</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.jsp">Historial</a></li>
                                         <%
                                             }else{
                                         %>
-                                        <li class="nav-item"><a class="nav-link" href="login_cli.html">iniciar sesion</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="login_cli.jsp">iniciar sesion</a></li>
                                         <%
-                                            }
+                                            }}
                                         %>
-					<li class="nav-item"><a class="nav-link" href="graficas.html">Estadisticas</a></li>
-					<li class="nav-item"><a href="ccompras.html"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
+					<li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
+					<li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
 				</ul>
 			</div>
 		</div>
@@ -161,12 +162,16 @@
                     </div>
                     <%}%>
 		</div>
-                <form>
-                    <input type="hidden" value="borraCuenta" name="command"/>
+                <form action="ClienteController" method="post">
+                    <input type="hidden" value="cerrarSesion" name="command"/>
+                    <button class="btn btn-info m-3 btn2" type="submit">Cerrar Sesion</button>
+                </form>
+                <form action="ClienteController" method="post">
+                    <input type="hidden" value="actualizarDatos" name="command"/>
                     <button class="btn btn-warning m-3 btn2" type="submit">Editar Datos</button>
                 </form>
-                <form>
-                    <input type="hidden" value="actualizarDatos" name="command"/>
+                <form action="conf_Del_cli.jsp" method="post">
+                    <input type="hidden" value="borraCuenta" name="command"/>
                     <button class="btn btn-danger m-3 btn2" type="submit">Borrar Cuenta</button>
                 </form>
 		</div>

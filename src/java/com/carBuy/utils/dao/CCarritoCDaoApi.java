@@ -6,12 +6,13 @@
 package com.carBuy.utils.dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
- * @author JAFET
+ * @author JAFET & kcram
  */
 public interface CCarritoCDaoApi {
     
-    boolean delete(String id_cli, Connection cn)throws Exception;
+    boolean delete(String id_cli, Connection con)throws SQLException;
 }

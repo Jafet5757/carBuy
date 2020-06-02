@@ -99,7 +99,7 @@ public class EmpleadoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        request.getRequestDispatcher("error_page.jsp").forward(request, response);
     }
 
 
