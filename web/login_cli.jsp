@@ -10,8 +10,6 @@
 <!DOCTYPE html>
 <%!
     String msg =null;
-    Cliente cliente = null;
-    Empleado empleado = null;
 %>
 <html>
   <head>
@@ -48,6 +46,8 @@
 
     <nav class="navbar navbar-expand-md navbar-danger bg-danger">
         <%
+        Cliente cliente = null;
+        Empleado empleado = null;
         try{
             cliente = (Cliente)request.getSession().getAttribute("usuario");
         }catch(Exception ex){}

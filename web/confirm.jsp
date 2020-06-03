@@ -10,10 +10,6 @@
 <%@page import="javax.annotation.Resource"%>
 <%@page import="com.carBuy.utils.model.Empleado"%>
 <%@page import="com.carBuy.utils.model.Cliente"%>
-<%!
-    Cliente cliente = null;
-    Empleado empleado = null;
-%>
 <html>
     <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -39,17 +35,29 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
                                         <%  
+                                            Cliente cliente = null;
+                                            Empleado empleado = null;
                                             try{
-                                                cliente = (Cliente)request.getSession().getAttribute("usuario");
+                                                cliente = (Cliente)session.getAttribute("usuario");
                                             }catch(Exception ex){}
                                             try{
-                                                empleado = (Empleado)request.getSession().getAttribute("usuario");
+                                                empleado = (Empleado)session.getAttribute("usuario");
                                             }catch(Exception ex){}
                                             if(cliente!=null || empleado!=null){
                                         %>
 					<li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
                                         <li class="nav-item"><a class="nav-link" href="HitorialCompras.jsp">Historial</a></li>
+                                        <%  
+                                            if(empleado!=null){
+                                        %>
+                                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                                         <%
+                                                if(empleado.getId_cpe()==1){
+                                        %>
+                                        <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
+                                        <%
+                                                }
+                                            }
                                             }else{
                                         %>
                                         <li class="nav-item"><a class="nav-link" href="login_cli.jsp">iniciar sesion</a></li>

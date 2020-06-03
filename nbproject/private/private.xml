@@ -3,23 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/plantillas/count.html</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/CCarritoCDaoApi.java</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/impl/CCarritoCDaoImpl.java</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/model/CCarrito_Compras.java</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/controller/EmpleadoController.java</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/EmpleadoDaoAPI.java</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/index.jsp</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/list_emp.jsp</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/impl/EmpleadoDaoImpl.java</file>
             <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/controller/ClienteController.java</file>
             <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/account.jsp</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/reg_cli.html</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/conf_Del_emp.jsp</file>
             <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/service/impl/EmpleadoServiceImpl.java</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/impl/ClienteDaoImpl.java</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/regRes_cli.jsp</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/service/ClienteServiceAPI.java</file>
             <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/service/EmpleadoServiceAPI.java</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/login_cli.html</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/conf_Del_cli.jsp</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/service/impl/ClienteServiceImpl.java</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/act_emp.jsp</file>
         </group>
     </open-files>
 </project-private>

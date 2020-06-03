@@ -4,6 +4,8 @@
     Author     : kcram
 --%>
 
+<%@page import="com.carBuy.utils.model.Empleado"%>
+<%@page import="com.carBuy.utils.model.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -28,7 +30,36 @@
 			<div class="collapse navbar-collapse" id="secondNavbar">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
+                                        <%  
+                                            Cliente cliente = null;
+                                            Empleado empleado = null;
+                                            try{
+                                                cliente = (Cliente)session.getAttribute("usuario");
+                                            }catch(Exception ex){}
+                                            try{
+                                                empleado = (Empleado)session.getAttribute("usuario");
+                                            }catch(Exception ex){}
+                                            if(cliente!=null || empleado!=null){
+                                        %>
+					<li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.jsp">Historial</a></li>
+                                        <%  
+                                            if(empleado!=null){
+                                        %>
+                                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
+                                        <%
+                                                if(empleado.getId_cpe()==1){
+                                        %>
+                                        <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
+                                        <%
+                                                }
+                                            }
+                                            }else{
+                                        %>
                                         <li class="nav-item"><a class="nav-link" href="login_cli.jsp">iniciar sesion</a></li>
+                                        <%
+                                            }
+                                        %>
 					<li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
 					<li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
 				</ul>
