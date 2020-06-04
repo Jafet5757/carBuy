@@ -6,8 +6,8 @@
 package com.carBuy.utils.controller;
 
 import com.carBuy.utils.model.Cliente;
-import com.carBuy.utils.service.impl.CCarritoCServiceImpl;
 import com.carBuy.utils.service.impl.ClienteServiceImpl;
+import com.carBuy.utils.service.impl.MCarritoCServiceImpl;
 import java.io.IOException;
 import java.time.LocalDate;
 import javax.annotation.Resource;
@@ -27,7 +27,7 @@ import java.sql.Connection;
 public class ClienteController extends HttpServlet {
 
     private ClienteServiceImpl clienteServiceImpl;
-    private CCarritoCServiceImpl cCarritoCServiceImpl;
+    private MCarritoCServiceImpl mCarritoCServiceImpl;
 
     @Resource(name = "jdbc/dbPool")
     private DataSource datasource;
@@ -37,7 +37,7 @@ public class ClienteController extends HttpServlet {
         super.init();
         try {
             this.clienteServiceImpl = new ClienteServiceImpl();
-            this.cCarritoCServiceImpl = new CCarritoCServiceImpl();
+            this.mCarritoCServiceImpl = new MCarritoCServiceImpl();
         } catch (Exception e) {
             throw new ServletException(e);
         }
@@ -107,7 +107,7 @@ public class ClienteController extends HttpServlet {
                 try {
                     Connection con = datasource.getConnection();
                     Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
-                    boolean exito2 = cCarritoCServiceImpl.delete(cliente.getId_cli(), con);
+                    boolean exito2 = mCarritoCServiceImpl.deleteByCli(cliente.getId_cli(), con);
                     con = datasource.getConnection();
                     boolean exito = clienteServiceImpl.delete(cliente.getId_cli(), cliente.getPass_cli(), con);
                     if (exito && exito2) {

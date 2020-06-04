@@ -158,7 +158,8 @@
                         MProductos mProducto = mProductosServiceImpl.get(dProducto.getId_mprod(), con);
                         if (mProducto == null) {
                             break;
-                        }else{
+                        } else {
+                            if (dProducto.getStock_prod() > 0) {
                 %>
                 <div class="card m-3" style="width: 18rem;">
                     <img src="<%=mProducto.getImg_prod()%>" class="card-img-top" alt="...">
@@ -174,6 +175,7 @@
                 </div>
                 <br/>
                 <%
+                            }
                         }
                     }
                 %>

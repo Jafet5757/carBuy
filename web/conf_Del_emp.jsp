@@ -15,7 +15,7 @@
 <%!
     private Pattern noStndr = Pattern.compile("[^();''*--]+");
 
-    private boolean checkKeys(String id,String pass) {
+    private boolean checkKeys(String id, String pass) {
         Matcher mat1 = noStndr.matcher(id);
         Matcher mat2 = noStndr.matcher(pass);
         if (mat1.matches() && mat2.matches()) {
@@ -102,11 +102,11 @@
                         <form action="EmpleadoController" method="post">
                             <%
                                 String id = "";
-                                String pass= "";
+                                String pass = "";
                                 try {
                                     id = (String) request.getParameter("id_emp");
                                     pass = (String) request.getParameter("pass_emp");
-                                    if (!checkKeys(id,pass)) {
+                                    if (!checkKeys(id, pass)) {
                                         request.getRequestDispatcher("error_page.jsp").forward(request, response);
                                     }
                                 } catch (Exception ex) {
@@ -115,7 +115,7 @@
                             %>
                             <input type="hidden" value="<%= id%>" name="id_emp"/>
                             <input type="hidden" value="<%= pass%>" name="pass_emp"/>
-                                <input type="hidden" value="borraCuentaExt" name="command"/>
+                            <input type="hidden" value="borraCuentaExt" name="command"/>
                             <button class="btn btn-danger m-3 btn2" type="submit">Borrar Cuenta</button>
                         </form>
                     </div>

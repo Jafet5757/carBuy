@@ -5,14 +5,15 @@
  */
 package com.carBuy.utils.dao;
 
+import com.carBuy.utils.model.CPrivilegio_Empleado;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
  *
- * @author JAFET & kcram
+ * @author kcram
  */
-public interface CCarritoCDaoApi {
+public interface CPrivilegioEDaoApi {
     
-    boolean delete(String id_cli, Connection con)throws SQLException;
+    CPrivilegio_Empleado get(int id_cpe,Connection con) throws SQLException;
 }

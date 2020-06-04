@@ -4,6 +4,7 @@
     Author     : kcram
 --%>
 
+<%@page import="com.carBuy.utils.service.impl.EmpleadoServiceImpl"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -21,6 +22,7 @@
     String msg = null;
     @Resource(name = "jdbc/dbPool")
     private DataSource datasource;
+    private EmpleadoServiceImpl empleadoServiceImpl = new EmpleadoServiceImpl();
     private Pattern noStndr = Pattern.compile("[^();''*--]+");
 
     private boolean checkKeys(String id, String pass) {
@@ -78,29 +80,29 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
                             <%
-                                Cliente cliente = null;
-                                Empleado empleado = null;
+                                Cliente clienteSession = null;
+                                Empleado empleadoSession = null;
                                 try {
-                                    cliente = (Cliente) session.getAttribute("usuario");
+                                    clienteSession = (Cliente) session.getAttribute("usuario");
                                 } catch (Exception ex) {
                                 }
                                 try {
-                                    empleado = (Empleado) session.getAttribute("usuario");
+                                    empleadoSession = (Empleado) session.getAttribute("usuario");
                                 } catch (Exception ex) {
                                 }
-                                if ((cliente == null && empleado == null) || cliente != null) {
+                                if ((clienteSession == null && empleadoSession == null) || clienteSession != null) {
                                     request.getRequestDispatcher("error_page.jsp").forward(request, response);
                                 } else {
-                                    if (cliente != null || empleado != null) {
+                                    if (clienteSession != null || empleadoSession != null) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
                         <li class="nav-item"><a class="nav-link" href="HitorialCompras.jsp">Historial</a></li>
                             <%
-                                if (empleado != null) {
+                                if (empleadoSession != null) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                             <%
-                                if (empleado.getId_cpe() == 1) {
+                                if (empleadoSession.getId_cpe() == 1) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
                             <%
@@ -150,21 +152,15 @@
                     } catch (Exception ex) {
                         request.getRequestDispatcher("error_page.jsp").forward(request, response);
                     }
-                %>
-                <input type="hidden" value="<%=id%>" name="id_emp_org" />
-                <input type="hidden" value="<%=pass%>" name="pass_emp_org" />
-                <%
                     try {
-
                         Connection con = datasource.getConnection();
-                        PreparedStatement ps = con.prepareStatement("select * from empleado "
-                                + "where id_emp=? "
-                                + "and pass_emp=?");
-                        ps.setString(1, id);
-                        ps.setString(2, pass);
-                        ResultSet rs = ps.executeQuery();
-                        rs.next();
+                        Empleado empleado = empleadoServiceImpl.get(id, pass, con);
+                        if (empleado == null) {
+                            request.getRequestDispatcher("error_page.jsp").forward(request, response);
+                        } else {
                 %>
+                <input type="hidden" value="<%=empleado.getId_emp() %>" name="id_emp_org" />
+                <input type="hidden" value="<%=empleado.getPass_emp() %>" name="pass_emp_org" />
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="validationDefault01">Nombre de Usuario</label>
@@ -174,7 +170,7 @@
                             id="validationDefault01"
                             name="id_emp"
                             required
-                            value="<%= rs.getString("id_emp")%>"
+                            value="<%=empleado.getId_emp()%>"
                             />
                     </div>
                     <div class="col-md-6 mb-3">
@@ -185,7 +181,7 @@
                             id="validationDefault01"
                             name="nom_emp"
                             required
-                            value="<%= rs.getString("nom_emp")%>"
+                            value="<%= empleado.getNom_emp()%>"
                             />
                     </div>
                 </div>
@@ -198,7 +194,7 @@
                             id="validationDefault02"
                             name="app_emp"
                             required
-                            value="<%= rs.getString("app_emp")%>"
+                            value="<%=empleado.getApp_emp()%>"
                             />
                     </div>
                     <div class="col-md-6 mb-3">
@@ -209,7 +205,7 @@
                             id="validationDefault03"
                             name="apm_emp"
                             required
-                            value="<%= rs.getString("apm_emp")%>"
+                            value="<%=empleado.getApm_emp()%>"
                             />
                     </div>
                 </div>
@@ -222,7 +218,7 @@
                             id="validationDefault03"
                             name="fnac_emp"
                             required
-                            value="<%= rs.getDate("fnac_emp")%>"
+                            value="<%=empleado.getFnac_emp()%>"
                             />
                     </div>
                     <div class="col-md-6 mb-3">
@@ -233,7 +229,7 @@
                             id="validationDefault01"
                             name="dir_emp"
                             required
-                            value="<%= rs.getString("dir_emp")%>"
+                            value="<%=empleado.getDir_emp()%>"
                             />
                     </div>
                 </div>
@@ -246,7 +242,7 @@
                             id="validationDefault01"
                             name="tel_emp"
                             required
-                            value="<%= rs.getString("tel_emp")%>"
+                            value="<%=empleado.getTel_emp()%>"
                             />
                     </div>
                     <div class="col-md-6 mb-3">
@@ -257,7 +253,7 @@
                             id="validationDefault01"
                             name="cel_emp"
                             required
-                            value="<%= rs.getString("cel_emp")%>"
+                            value="<%=empleado.getCel_emp()%>"
                             />
                     </div>
                 </div>
@@ -270,7 +266,7 @@
                             id="validationDefault02"
                             name="pass_emp"
                             required
-                            value="<%= rs.getString("pass_emp")%>"
+                            value="<%=empleado.getPass_emp()%>"
                             />
                     </div>
                     <div class="col-md-6 mb-3">
@@ -283,9 +279,9 @@
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Enviar</button>
-                <%  con.close();
+                <%
+                        }
                     } catch (SQLException ex) {
-                        System.out.println(ex);
                         request.getRequestDispatcher("error_page.jsp").forward(request, response);
                     }
                 %>

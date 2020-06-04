@@ -65,6 +65,9 @@
             .btn2{
                 background-color: #ff5200; 
             }
+            .btn3{
+                background-color: #dbdbdb; 
+            }
             footer{
                 padding: 20px;
                 background: #5A0009;
@@ -155,19 +158,28 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title h1"><%=mProductos.getNom_prod() %></h5>		       
+                            <h5 class="card-title h1"><%=mProductos.getNom_prod()%></h5>		       
                             <p>Color: <%=cColorProd.getTipo_ccp()%><br><br>marca: <%=catProductos.getTipo_prod()%><br><br>Precio: $<%=dProductos.getPrecio_prod()%> mxn</p>
-                            <form class="mt-3">
-                                <button class="btn btn-danger m-2 btn2" id="buy">comprar</button>
-                                <button class="btn btn3">Agregar al carro de compras</button>
-                            </form>
+                            <div class="row">
+                                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
+                                    <input type="hidden" value="compraDirecta" name="command"/>
+                                    <input type="submit" class="btn btn-danger m-2 btn2" id="buy" value="Comprar"/>
+                                </form>
+                                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
+                                    <input type="hidden" value="<%= dProductos.getId_dprod() %>" name="id_dprod"/>
+                                    <input type="hidden" value="agregarCarrito" name="command"/>
+                                    <label for="numeros" class="form-label">Cantidad: </label>
+                                    <input class="m-2" type="number" value="1" min="1" max="<%=dProductos.getStock_prod()%>" id="numeros">
+                                    <input type="submit" class="btn btn3" value="Agregar al carro de compras"/>
+                                </form>
+                            </div>
                             <hr><p class="card-text"><%=mProductos.getDes_prod()%></p>
                         </div>
                     </div>
                     <%
                         }
                     } catch (Exception ex) {
-System.out.println(ex);
+                        System.out.println(ex);
                     %>
                     <div class="alert alert-info" role="alert">
                         Lo sentimos. El producto que busca no esta disponible.

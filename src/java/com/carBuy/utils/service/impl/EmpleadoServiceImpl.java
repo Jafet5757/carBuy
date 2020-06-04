@@ -10,6 +10,7 @@ import com.carBuy.utils.model.Empleado;
 import com.carBuy.utils.service.EmpleadoServiceAPI;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -123,6 +124,17 @@ public class EmpleadoServiceImpl implements EmpleadoServiceAPI{
             return true;
         }else{
             return false;
+        }
+    }
+
+    @Override
+    public ArrayList<Empleado> getAll(Connection con) throws SQLException {
+        try{
+            return empleadoDaoImpl.getAll( con);
+        }catch(SQLException ex){
+            return null;
+        }finally{
+            con.close();
         }
     }
     

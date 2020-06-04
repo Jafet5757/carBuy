@@ -5,12 +5,12 @@
  */
 package com.carBuy.utils.service;
 
-import com.carBuy.utils.dao.CCarritoCDaoApi;
+import com.carBuy.utils.dao.MCarritoCDaoApi;
 
 /**
  *
  * @author kcram
  */
-public interface CCarritoCServiceAPI extends CCarritoCDaoApi{
+public interface MCarritoCServiceAPI extends MCarritoCDaoApi{
     
 }

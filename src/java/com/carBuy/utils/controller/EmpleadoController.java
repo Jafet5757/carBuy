@@ -142,10 +142,10 @@ public class EmpleadoController extends HttpServlet {
                             + "Se ha borrado el registro\n"
                             + "</div>");
                     request.getRequestDispatcher("confirm.jsp").forward(request, response);
-                }else{
+                } else {
                     request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
-                        + "Ocurrio un error. Intentelo nuevamente\n"
-                        + "</div>");
+                            + "Ocurrio un error. Intentelo nuevamente\n"
+                            + "</div>");
                     request.getRequestDispatcher("confirm.jsp").forward(request, response);
                 }
             } catch (Exception ex) {

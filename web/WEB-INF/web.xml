@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>DCarritoCController</servlet-name>
+        <servlet-class>com.carBuy.utils.controller.DCarritoCController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DCarritoCController</servlet-name>
+        <url-pattern>/DCarritoCController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ClienteController</servlet-name>
+        <servlet-class>com.carBuy.utils.controller.ClienteController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClienteController</servlet-name>
+        <url-pattern>/ClienteController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EmpleadoController</servlet-name>
+        <servlet-class>com.carBuy.utils.controller.EmpleadoController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmpleadoController</servlet-name>
+        <url-pattern>/EmpleadoController</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

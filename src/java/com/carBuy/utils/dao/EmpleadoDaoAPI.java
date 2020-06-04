@@ -8,6 +8,7 @@ package com.carBuy.utils.dao;
 import com.carBuy.utils.model.Empleado;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,4 +23,6 @@ public interface EmpleadoDaoAPI {
     Empleado modify(String id,String pass,Empleado empleado, Connection con) throws SQLException;
     
     Empleado get(String id,String pass, Connection con) throws SQLException;
+    
+    ArrayList<Empleado> getAll(Connection con) throws SQLException;
 }
