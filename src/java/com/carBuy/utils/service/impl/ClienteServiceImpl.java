@@ -125,4 +125,28 @@ public class ClienteServiceImpl implements ClienteServiceAPI{
             return false;
         }
     }
+    
+    private boolean checkID(String id){
+        Matcher mat1 = noStndr.matcher(id);
+        if(mat1.matches()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public Cliente getCookie(String id, Connection con) throws SQLException {
+        if(checkID(id)){
+            try{
+                return clienteDaoImpl.getCookie(id, con);
+            }catch(SQLException ex){
+                return null;
+            }finally{
+                con.close();
+            }
+        }else{
+            return null;
+        }
+    }
 }

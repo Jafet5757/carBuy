@@ -9,6 +9,7 @@ import com.carBuy.utils.model.DHistorial;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,9 +17,21 @@ import java.time.LocalDate;
  */
 public interface DHistorialDaoApi {
     
-    DHistorial getByDate(LocalDate fecha,Connection con)throws SQLException;
+    DHistorial get(String id_cli,Connection con)throws SQLException;
     
-    DHistorial save(DHistorial dHistorial,Connection con)throws SQLException;
+    ArrayList<DHistorial> getHis(String id_cli,Connection con)throws SQLException;
     
-    boolean delete(int id_dhis,Connection con)throws SQLException;
+    ArrayList<DHistorial> getByDate(LocalDate fecha,Connection con)throws SQLException;
+    
+    DHistorial modify(DHistorial dHistorial,Connection con)throws SQLException;
+    
+    DHistorial add(DHistorial dHistorial,Connection con)throws SQLException;
+    
+    boolean confirm(String id_cli,int id_dhis,Connection con)throws SQLException;
+    
+    boolean cancell(String id_cli,int id_dhis,Connection con)throws SQLException;
+    
+    boolean deleteAll(String id_cli,Connection con)throws SQLException;
+    
+    boolean instantSave(DHistorial dHistorial,Connection con)throws SQLException;
 }

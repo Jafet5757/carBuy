@@ -5,8 +5,6 @@
  */
 package com.carBuy.utils.model;
 
-import java.time.LocalDate;
-
 
 /**
  *
@@ -15,13 +13,11 @@ import java.time.LocalDate;
 public class MCarrito_Compra {
     private int id_mcc;
     private int id_dprod;
-    private String id_cli;
     private int id_dhis;
     private int Cantidad;
     private double Sub_total;
     private double Iva;
     private double Total;
-    private boolean comprado;
 
     public int getId_mcc() {
         return id_mcc;
@@ -37,14 +33,6 @@ public class MCarrito_Compra {
 
     public void setId_dprod(int id_dprod) {
         this.id_dprod = id_dprod;
-    }
-
-    public String getId_cli() {
-        return id_cli;
-    }
-
-    public void setId_cli(String id_cli) {
-        this.id_cli = id_cli;
     }
 
     public int getCantidad() {
@@ -77,14 +65,6 @@ public class MCarrito_Compra {
 
     public void setTotal(double Total) {
         this.Total = Total;
-    }
-
-    public boolean isComprado() {
-        return comprado;
-    }
-
-    public void setComprado(boolean comprado) {
-        this.comprado = comprado;
     }
 
     public int getId_dhis() {

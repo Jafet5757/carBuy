@@ -180,4 +180,33 @@ public class EmpleadoDaoImpl implements EmpleadoDaoAPI {
         }
     }
 
+    @Override
+    public Empleado getCookie(String id, Connection con) throws SQLException {
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from empleado "
+                    + "where id_emp=?");
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                return null;
+            } else {
+                Empleado empleado = new Empleado();
+                empleado.setId_emp(rs.getString("id_emp"));
+                empleado.setNom_emp(rs.getString("nom_emp"));
+                empleado.setApp_emp(rs.getString("app_emp"));
+                empleado.setApm_emp(rs.getString("apm_emp"));
+                empleado.setFnac_emp((rs.getDate("fnac_emp")).toLocalDate());
+                empleado.setDir_emp(rs.getString("dir_emp"));
+                empleado.setTel_emp(rs.getString("tel_emp"));
+                empleado.setCel_emp(rs.getString("cel_emp"));
+                empleado.setPass_emp(rs.getString("pass_emp"));
+                empleado.setId_cpe(rs.getInt("id_cpe"));
+                ps.close();
+                return empleado;
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
 }

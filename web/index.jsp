@@ -4,6 +4,8 @@
     Author     : kcram
 --%>
 
+<%@page import="com.carBuy.utils.service.impl.ClienteServiceImpl"%>
+<%@page import="com.carBuy.utils.service.impl.EmpleadoServiceImpl"%>
 <%@page import="com.carBuy.utils.service.impl.MProductosServiceImpl"%>
 <%@page import="com.carBuy.utils.service.impl.DProductosServiceImpl"%>
 <%@page import="com.carBuy.utils.model.DProductos"%>
@@ -21,6 +23,8 @@
 <%!
     @Resource(name = "jdbc/dbPool")
     private DataSource datasource;
+    private EmpleadoServiceImpl empleadoServiceImpl = new EmpleadoServiceImpl();
+    private ClienteServiceImpl clienteServiceImpl = new ClienteServiceImpl();
     private MProductosServiceImpl mProductosServiceImpl = new MProductosServiceImpl();
     private DProductosServiceImpl dProductosServiceImpl = new DProductosServiceImpl();
 %>
@@ -82,6 +86,20 @@
                                 try {
                                     empleado = (Empleado) session.getAttribute("usuario");
                                 } catch (Exception ex) {
+                                }
+                                if(cliente==null && empleado==null){
+                                    Cookie[] misCookies = request.getCookies();
+                                    for (Cookie cookie : misCookies){
+                                        if(cookie.getName().equals("idEmpleado")){
+                                            Connection con = datasource.getConnection();
+                                            empleado = empleadoServiceImpl.getCookie(cookie.getValue(), con);
+                                            request.getSession().setAttribute("usuario", empleado);
+                                        }else if(cookie.getName().equals("idCliente")){
+                                            Connection con = datasource.getConnection();
+                                            cliente = clienteServiceImpl.getCookie(cookie.getValue(), con);
+                                            request.getSession().setAttribute("usuario", cliente);
+                                        }
+                                    }
                                 }
                                 if (cliente != null || empleado != null) {
                             %>

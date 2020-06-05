@@ -6,7 +6,9 @@
 package com.carBuy.utils.controller;
 
 import com.carBuy.utils.model.Cliente;
+import com.carBuy.utils.model.DHistorial;
 import com.carBuy.utils.service.impl.ClienteServiceImpl;
+import com.carBuy.utils.service.impl.DHistorialServiceImpl;
 import com.carBuy.utils.service.impl.MCarritoCServiceImpl;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import javax.servlet.http.Cookie;
 
 /**
  *
@@ -28,6 +31,7 @@ public class ClienteController extends HttpServlet {
 
     private ClienteServiceImpl clienteServiceImpl;
     private MCarritoCServiceImpl mCarritoCServiceImpl;
+    private DHistorialServiceImpl dHistorialServiceImpl;
 
     @Resource(name = "jdbc/dbPool")
     private DataSource datasource;
@@ -38,6 +42,7 @@ public class ClienteController extends HttpServlet {
         try {
             this.clienteServiceImpl = new ClienteServiceImpl();
             this.mCarritoCServiceImpl = new MCarritoCServiceImpl();
+            this.dHistorialServiceImpl = new DHistorialServiceImpl();
         } catch (Exception e) {
             throw new ServletException(e);
         }
@@ -70,6 +75,9 @@ public class ClienteController extends HttpServlet {
                         request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\">\n"
                                 + "Se ha registrado exitosamente\n"
                                 + "</div>");
+                        Cookie miCookie = new Cookie("idCliente", cliente.getId_cli());
+                        miCookie.setMaxAge(60 * 60 * 24);
+                        response.addCookie(miCookie);
                         request.getRequestDispatcher("confirm.jsp").forward(request, response);
                     } else {
                         request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
@@ -93,6 +101,9 @@ public class ClienteController extends HttpServlet {
                 cliente = clienteServiceImpl.get(id, pass, con);
                 if (cliente != null) {
                     request.getSession().setAttribute("usuario", cliente);
+                    Cookie miCookie = new Cookie("idCliente", cliente.getId_cli());
+                    miCookie.setMaxAge(60 * 60 * 24);
+                    response.addCookie(miCookie);
                     response.sendRedirect("index.jsp");
                 } else {
                     request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
@@ -107,14 +118,27 @@ public class ClienteController extends HttpServlet {
                 try {
                     Connection con = datasource.getConnection();
                     Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
-                    boolean exito2 = mCarritoCServiceImpl.deleteByCli(cliente.getId_cli(), con);
+                    DHistorial dHistorial = dHistorialServiceImpl.get(cliente.getId_cli(), con);
+                    if (dHistorial != null) {
+                        con = datasource.getConnection();
+                        mCarritoCServiceImpl.deleteAll(dHistorial.getId_dhis(), con);
+                        con = datasource.getConnection();
+                        dHistorialServiceImpl.deleteAll(cliente.getId_cli(), con);
+                    }
                     con = datasource.getConnection();
                     boolean exito = clienteServiceImpl.delete(cliente.getId_cli(), cliente.getPass_cli(), con);
-                    if (exito && exito2) {
+                    if (exito) {
                         request.getSession().setAttribute("usuario", null);
                         request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\">\n"
                                 + "Se ha borrado su cuenta exitosamente\n"
                                 + "</div>");
+                        Cookie[] misCookies = request.getCookies();
+                        for (Cookie cookie : misCookies) {
+                            if (cookie.getName().equals("idCliente")) {
+                                cookie.setMaxAge(0);
+                                response.addCookie(cookie);
+                            }
+                        }
                         request.getRequestDispatcher("confirm.jsp").forward(request, response);
                     } else {
                         request.getSession().setAttribute("usuario", null);
@@ -155,6 +179,13 @@ public class ClienteController extends HttpServlet {
                     request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\">\n"
                             + "Se ha actualizado su cuenta exitosamente\n"
                             + "</div>");
+                    Cookie[] misCookies = request.getCookies();
+                    for (Cookie cookie : misCookies) {
+                        if (cookie.getName().equals("idCliente")) {
+                            cookie.setValue(cliente_act.getId_cli());
+                            response.addCookie(cookie);
+                        }
+                    }
                     request.getRequestDispatcher("confirm.jsp").forward(request, response);
                 } else {
                     request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
@@ -172,6 +203,13 @@ public class ClienteController extends HttpServlet {
             case "cerrarSesion":
                     try {
                 request.getSession().setAttribute("usuario", null);
+                Cookie[] misCookies = request.getCookies();
+                for (Cookie cookie : misCookies) {
+                    if (cookie.getName().equals("idCliente")) {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    }
+                }
                 response.sendRedirect("index.jsp");
             } catch (Exception ex) {
                 request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"

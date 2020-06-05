@@ -126,6 +126,15 @@ public class EmpleadoServiceImpl implements EmpleadoServiceAPI{
             return false;
         }
     }
+    
+    private boolean checkID(String id){
+        Matcher mat1 = noStndr.matcher(id);
+        if(mat1.matches()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     @Override
     public ArrayList<Empleado> getAll(Connection con) throws SQLException {
@@ -135,6 +144,21 @@ public class EmpleadoServiceImpl implements EmpleadoServiceAPI{
             return null;
         }finally{
             con.close();
+        }
+    }
+
+    @Override
+    public Empleado getCookie(String id, Connection con) throws SQLException {
+        if(checkID(id)){
+            try{
+                return empleadoDaoImpl.getCookie(id, con);
+            }catch(SQLException ex){
+                return null;
+            }finally{
+                con.close();
+            }
+        }else{
+            return null;
         }
     }
     

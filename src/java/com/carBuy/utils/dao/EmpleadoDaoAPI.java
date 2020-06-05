@@ -24,5 +24,7 @@ public interface EmpleadoDaoAPI {
     
     Empleado get(String id,String pass, Connection con) throws SQLException;
     
+    Empleado getCookie(String id, Connection con) throws SQLException;
+    
     ArrayList<Empleado> getAll(Connection con) throws SQLException;
 }

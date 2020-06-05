@@ -8,7 +8,6 @@ package com.carBuy.utils.dao;
 import com.carBuy.utils.model.MCarrito_Compra;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -17,21 +16,11 @@ import java.util.ArrayList;
  */
 public interface MCarritoCDaoApi {
     
-    boolean add(MCarrito_Compra mCarrito_Compra,Connection con)throws SQLException;
+    MCarrito_Compra add(MCarrito_Compra mCarrito_Compra,Connection con)throws SQLException;
     
-    boolean quit(int id_mcc,String id_cli,Connection con)throws SQLException;
+    boolean delete(int id_mcc,Connection con)throws SQLException;
     
-    boolean quitAll(String id_cli,Connection con)throws SQLException;
+    boolean deleteAll(int id_dhis,Connection con)throws SQLException;
     
-    boolean deleteByCli(String id_cli,Connection con)throws SQLException;
-    
-    boolean buy(MCarrito_Compra mCarrito_Compra,Connection con)throws SQLException;
-    
-    boolean buyAll(String id_cli,int id_dhis,Connection con)throws SQLException;
-    
-    ArrayList<MCarrito_Compra> getAllUnreg(String id_cli,Connection con)throws SQLException;
-    
-    ArrayList<MCarrito_Compra> getAllByCli(String id_cli,Connection con)throws SQLException;
-    
-    ArrayList<MCarrito_Compra> getAllByHis(int id_dhis,Connection con)throws SQLException;
+    ArrayList<MCarrito_Compra> getAll(int id_dhis,Connection con)throws SQLException;
 }

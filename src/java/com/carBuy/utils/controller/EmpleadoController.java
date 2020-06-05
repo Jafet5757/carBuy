@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,6 +76,9 @@ public class EmpleadoController extends HttpServlet {
                     request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\">\n"
                             + "Se ha registrado al empleado exitosamente\n"
                             + "</div>");
+                    Cookie miCookie = new Cookie("idEmpleado", empleado.getId_emp());
+                    miCookie.setMaxAge(60 * 60 * 24);
+                    response.addCookie(miCookie);
                     request.getRequestDispatcher("confirm.jsp").forward(request, response);
                 } else {
                     request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
@@ -93,6 +97,9 @@ public class EmpleadoController extends HttpServlet {
                 empleado = empleadoServiceImpl.get(id, pass, con);
                 if (empleado != null) {
                     request.getSession().setAttribute("usuario", empleado);
+                    Cookie miCookie = new Cookie("idEmpleado", empleado.getId_emp());
+                    miCookie.setMaxAge(60 * 60 * 24);
+                    response.addCookie(miCookie);
                     response.sendRedirect("index.jsp");
                 } else {
                     request.setAttribute("msg", "Ocurrio un error. Intentelo nuevamente");
@@ -114,6 +121,13 @@ public class EmpleadoController extends HttpServlet {
                     request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\">\n"
                             + "Se ha borrado su cuenta exitosamente\n"
                             + "</div>");
+                    Cookie[] misCookies = request.getCookies();
+                    for (Cookie cookie : misCookies) {
+                        if (cookie.getName().equals("idEmpleado")) {
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                        }
+                    }
                     request.getRequestDispatcher("confirm.jsp").forward(request, response);
                 } else {
                     request.getSession().setAttribute("usuario", null);
@@ -178,6 +192,13 @@ public class EmpleadoController extends HttpServlet {
                     request.setAttribute("msg", "<div class=\"alert alert-success\" role=\"alert\">\n"
                             + "Se ha actualizado su cuenta exitosamente\n"
                             + "</div>");
+                    Cookie[] misCookies = request.getCookies();
+                    for (Cookie cookie : misCookies) {
+                        if (cookie.getName().equals("idEmpleado")) {
+                            cookie.setValue(empleado_act.getId_emp());
+                            response.addCookie(cookie);
+                        }
+                    }
                     request.getRequestDispatcher("confirm.jsp").forward(request, response);
                 } else {
                     request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
@@ -240,6 +261,13 @@ public class EmpleadoController extends HttpServlet {
             case "cerrarSesion":
                     try {
                 request.getSession().setAttribute("usuario", null);
+                Cookie[] misCookies = request.getCookies();
+                for (Cookie cookie : misCookies) {
+                    if (cookie.getName().equals("idEmpleado")) {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    }
+                }
                 response.sendRedirect("index.jsp");
             } catch (Exception ex) {
                 request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"

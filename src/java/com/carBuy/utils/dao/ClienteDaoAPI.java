@@ -22,4 +22,6 @@ public interface ClienteDaoAPI{
     Cliente modify(String id,String pass,Cliente cliente, Connection con) throws SQLException;
     
     Cliente get(String id,String pass, Connection con) throws SQLException;
+    
+    Cliente getCookie(String id, Connection con) throws SQLException;
 }
