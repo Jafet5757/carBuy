@@ -66,7 +66,7 @@
                                     if (clienteSesion != null || empleadoSesion != null) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
-                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.jsp">Historial</a></li>
+                        <li class="nav-item"><a class="nav-link" href="hcompras.jsp">Historial</a></li>
                             <%
                                 if (empleadoSesion != null) {
                             %>

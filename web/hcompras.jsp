@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ccompras
-    Created on : 5/06/2020, 05:42:58 PM
+    Document   : hcompras
+    Created on : 6/06/2020, 11:08:06 AM
     Author     : kcram
 --%>
 
@@ -53,9 +53,6 @@
             .btn3{
                 background-color: #dbdbdb; 
             }
-            .btn4{
-                background-color: #4242f5; 
-            }
             footer{
                 padding: 20px;
                 background: #5A0009;
@@ -66,7 +63,7 @@
                 height: auto;
             }
         </style>
-        <title>CarritoCompras</title>
+        <title>HistorialCompras</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-danger bg-danger">
@@ -93,7 +90,7 @@
                                 }
                                 if ((cliente == null && empleado != null) || (cliente == null && empleado == null)) {
                                     request.setAttribute("msg", "<div class=\"alert alert-info\" role=\"alert\">\n"
-                                            + "Necesita estar logueado como cliente para acceder al carrito.\n"
+                                            + "Necesita estar logueado como cliente para acceder a su historial.\n"
                                             + "</div>");
                                     request.getRequestDispatcher("confirm.jsp").forward(request, response);
                                 }
@@ -129,26 +126,15 @@
             <%
                 try {
                     Connection con = datasource.getConnection();
-                    DHistorial dHistorial = dHistorialServiceImpl.get(cliente.getId_cli(), con);
-                    if (dHistorial != null) {
-                        dHistorial.getId_dhis();
-                        con = datasource.getConnection();
-                        ArrayList<MCarrito_Compra> mProductosArray = mCarritoCServiceImpl.getAll(dHistorial.getId_dhis(), con);
-                        if (mProductosArray != null) {
+                    ArrayList<DHistorial> dHistorialArray = dHistorialServiceImpl.getHis(cliente.getId_cli(), con);
+                    if (dHistorialArray != null) {
+                        for (DHistorial dHistorial : dHistorialArray) {
+                            dHistorial.getId_dhis();
+                            con = datasource.getConnection();
+                            ArrayList<MCarrito_Compra> mProductosArray = mCarritoCServiceImpl.getAll(dHistorial.getId_dhis(), con);
+                            if (mProductosArray != null) {
             %>
-            <div class="row">
-                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
-                    <input type="hidden" value="<%= dHistorial.getId_dhis()%>" name="id_dhis"/>
-                    <input type="hidden" value="eliminarCarritoMul" name="command"/>
-                    <input type="submit" class="btn btn-danger btn2" value="Borrar todo"/>
-                </form>
-                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
-                    <input type="hidden" value="confirmar" name="command"/>
-                    <input type="submit" class="btn btn3" value="confirmar compra"/>
-                </form>
-            </div>
-            <br>
-            <p class="font-weight-bold">Ultima modificacion <%= dHistorial.getFecha()%></p><br>
+            <p class="font-weight-bold">Fecha del pedido: <%= dHistorial.getFecha()%></p><br>
             <div class="row">
                 <%
                     for (MCarrito_Compra mProducto : mProductosArray) {
@@ -168,31 +154,19 @@
                             <div class="card-body">
                                 <h5 class="card-title"><%=mProductos.getNom_prod()%></h5>
                                 <p>Precio unitario: <%= dProductos.getPrecio_prod()%>$</p>
-                                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
-                                    <input type="hidden" value="<%= dProductos.getId_dprod()%>" name="id_dprod"/>
-                                    <input type="hidden" value="<%= dHistorial.getId_dhis()%>" name="id_dhis"/>
-                                    <input type="hidden" value="<%= mProducto.getId_mcc()%>" name="id_mcc"/>
-                                    <input type="hidden" value="eliminarCarritoUni" name="command"/>
-                                    <input type="submit" class="btn btn3" value="Borrar del carro"/>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <%}
-                %></div>
-            <hr><p class="font-weight-bold">Sub total: <%= dHistorial.getSub_total()%>$</p>
+                %></div><p class="font-weight-bold">Sub total: <%= dHistorial.getSub_total()%>$</p>
             <p class="font-weight-bold">Iva: <%= dHistorial.getIva()%>$</p>
-            <p class="font-weight-bold">Total actual: <%= dHistorial.getTotal()%>$</p>
-
+            <p class="font-weight-bold">Total: <%= dHistorial.getTotal()%>$</p>
+            <hr>
             <%
-            } else {
-            %>
-            <div class="alert alert-info" role="alert">
-                No Hay productos en su carrito de compras
-            </div>
-            <%
+                    } else {
+                    }
                 }
             } else {
             %>

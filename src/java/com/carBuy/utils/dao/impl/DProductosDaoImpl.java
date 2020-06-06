@@ -70,4 +70,89 @@ public class DProductosDaoImpl implements DProductosDaoApi{
             return null;
         }
     }
+
+    @Override
+    public DProductos modify(DProductos dProductos, Connection con) throws SQLException {
+        try{
+            if(!checkExistence(dProductos.getId_dprod(), con)){
+                return null;
+            }else{
+                PreparedStatement ps = con.prepareStatement("update dproductos set "
+                        + "id_dprod=?, id_prod=?, id_ccp=?, id_mprod=?, precio_prod=?, "
+                        + "stock_prod=? "
+                        + "where id_dprod=?");
+                ps.setInt(1, dProductos.getId_dprod());
+                ps.setInt(2, dProductos.getId_prod());
+                ps.setInt(3, dProductos.getId_ccp());
+                ps.setInt(4, dProductos.getId_mprod());
+                ps.setDouble(5, dProductos.getPrecio_prod());
+                ps.setInt(6, dProductos.getStock_prod());
+                ps.setInt(7, dProductos.getId_dprod());
+                ps.executeUpdate();
+                ps.close();
+                return dProductos;
+            }
+        }catch(SQLException ex){
+            return null;
+        }
+    }
+
+    @Override
+    public boolean delete(int id_dprod, Connection con) throws SQLException {
+        try{
+            if(!checkExistence(id_dprod, con)){
+                return false;
+            }else{
+                PreparedStatement ps = con.prepareStatement("delete from dproductos "
+                        + "where id_dprod=? limit 1");
+                ps.setInt(1, id_dprod);
+                ps.executeUpdate();
+                ps.close();
+                return true;
+            }
+        }catch(SQLException ex){
+            return false;
+        }
+    }
+
+    @Override
+    public DProductos add(DProductos dProductos, Connection con) throws SQLException {
+        try{
+            if(!checkExistence(dProductos.getId_dprod(), con)){
+                return null;
+            }else{
+                PreparedStatement ps = con.prepareStatement("insert into dproductos"
+                        + "(id_dprod, id_prod, id_ccp, id_mprod, precio_prod, stock_prod) "
+                        + "values(null,?,?,?,?,?)");
+                ps.setInt(1, dProductos.getId_prod());
+                ps.setInt(2, dProductos.getId_ccp());
+                ps.setInt(3, dProductos.getId_mprod());
+                ps.setDouble(4, dProductos.getPrecio_prod());
+                ps.setInt(5, dProductos.getStock_prod());
+                ps.executeUpdate();
+                ps.close();
+                return dProductos;
+            }
+        }catch(SQLException ex){
+            return null;
+        }
+    }
+    
+    private boolean checkExistence(int id, Connection con) throws SQLException {
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from dproductos "
+                    + "where id_dprod=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                ps.close();
+                return false;
+            } else {
+                ps.close();
+                return true;
+            }
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

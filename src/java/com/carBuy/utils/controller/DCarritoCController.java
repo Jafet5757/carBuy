@@ -160,6 +160,126 @@ public class DCarritoCController extends HttpServlet {
                 request.getRequestDispatcher("confirm.jsp").forward(request, response);
             }
             break;
+            case "confirmar":
+                try {
+                Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
+                if (cliente != null) {
+                    Connection con = datasource.getConnection();
+                    DHistorial dHistorial = dHistorialServiceImpl.get(cliente.getId_cli(), con);
+                    con = datasource.getConnection();
+                    if (dHistorial != null) {
+                            con = datasource.getConnection();
+                            boolean exito = dHistorialServiceImpl.confirm(cliente.getId_cli(),dHistorial.getId_dhis(), con);
+                            if (exito) {
+                                response.sendRedirect("hcompras.jsp");
+                            } else {
+                                request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                        + "Ocurrio un error. Intentelo nuevamente\n"
+                                        + "</div>");
+                                request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                            }
+                    } else {
+                        request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                + "Ocurrio un error. Intentelo nuevamente\n"
+                                + "</div>");
+                        request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                    }
+
+                } else {
+                    request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                            + "Ocurrio un error. Intentelo nuevamente\n"
+                            + "</div>");
+                    request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                }
+
+            } catch (Exception ex) {
+                request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                        + "Ocurrio un error. Intentelo nuevamente\n"
+                        + "</div>");
+                request.getRequestDispatcher("confirm.jsp").forward(request, response);
+            }
+            break;
+            case "compraDirecta":
+                try {
+                Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
+                if (cliente != null) {
+                    Connection con = datasource.getConnection();
+                    DProductos dProductos = dProductosServiceImpl.get(Integer.parseInt(request.getParameter("id_dprod")), con);
+                    if (dProductos != null) {
+                        if (dProductos.getStock_prod() > 0) {
+                            DHistorial dHistorial = new DHistorial();
+                            dHistorial.setId_dhis(0);
+                            dHistorial.setId_cli(cliente.getId_cli());
+                            dHistorial.setArticulos(1);
+                            dHistorial.setSub_total(dProductos.getPrecio_prod());
+                            dHistorial.setIva(dProductos.getPrecio_prod() * 0.16);
+                            dHistorial.setTotal(dProductos.getPrecio_prod() + dHistorial.getIva());
+                            Date sqlDate = new Date(new java.util.Date().getTime());
+                            dHistorial.setFecha(sqlDate.toLocalDate());
+                            dHistorial.setComprado(true);
+                            con = datasource.getConnection();
+                            boolean exito = dHistorialServiceImpl.instantSave(dHistorial, con);
+                            if (exito) {
+                                con = datasource.getConnection();
+                                ArrayList<DHistorial> dHistorialArray = dHistorialServiceImpl.getHis(cliente.getId_cli(), con);
+                                dHistorial = dHistorialArray.get(dHistorialArray.size() - 1);
+                                MCarrito_Compra mCarritoC = new MCarrito_Compra();
+                                mCarritoC.setId_mcc(0);
+                                mCarritoC.setId_dprod(Integer.parseInt(request.getParameter("id_dprod")));
+                                mCarritoC.setId_dhis(dHistorial.getId_dhis());
+                                con = datasource.getConnection();
+                                mCarritoC = mCarritoCServiceImpl.add(mCarritoC, con);
+                                if (mCarritoC != null) {
+                                    con = datasource.getConnection();
+                                    dProductos.setStock_prod(dProductos.getStock_prod() - 1);
+                                    dProductos = dProductosServiceImpl.modify(dProductos, con);
+                                    if (dProductos != null) {
+                                        response.sendRedirect("hcompras.jsp");
+                                    } else {
+                                        request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                                + "Ocurrio un error. Intentelo nuevamente\n"
+                                                + "</div>");
+                                        request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                                    }
+                                } else {
+                                    request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                            + "Ocurrio un error. Intentelo nuevamente\n"
+                                            + "</div>");
+                                    request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                                }
+                            } else {
+                                request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                        + "Ocurrio un error. Intentelo nuevamente\n"
+                                        + "</div>");
+                                request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                            }
+                        } else {
+                            request.setAttribute("msg", "<div class=\"alert alert-info\" role=\"alert\">\n"
+                                    + "Lo sentimos. El producto que busca no se encuentra disponible\n"
+                                    + "</div>");
+                            request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                        }
+
+                    } else {
+                        request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                + "Ocurrio un error. Intentelo nuevamente\n"
+                                + "</div>");
+                        request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("msg", "<div class=\"alert alert-info\" role=\"alert\">\n"
+                            + "Necesita estar logueado como cliente para hacer compras.\n"
+                            + "</div>");
+                    request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                }
+
+            } catch (Exception ex) {
+                request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                        + "Ocurrio un error. Intentelo nuevamente\n"
+                        + "</div>");
+                request.getRequestDispatcher("confirm.jsp").forward(request, response);
+            }
+            break;
             case "eliminarCarritoUni":
                 try {
                 Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
@@ -179,7 +299,23 @@ public class DCarritoCController extends HttpServlet {
                                             con = datasource.getConnection();
                                             boolean exito = mCarritoCServiceImpl.delete(Integer.parseInt(request.getParameter("id_mcc")), con);
                                             if (exito) {
-                                                response.sendRedirect("ccompras.jsp");
+                                                con = datasource.getConnection();
+                                                dHistorial.setArticulos(dHistorial.getArticulos() - 1);
+                                                dHistorial.setSub_total(dHistorial.getSub_total() - dProductos.getPrecio_prod());
+                                                dHistorial.setIva(dHistorial.getSub_total() * 0.16);
+                                                dHistorial.setTotal(dHistorial.getSub_total() + dHistorial.getIva());
+                                                Date sqlDate = new Date(new java.util.Date().getTime());
+                                                dHistorial.setFecha(sqlDate.toLocalDate());
+                                                dHistorial.setComprado(false);
+                                                dHistorial = dHistorialServiceImpl.modify(dHistorial, con);
+                                                if (dHistorial != null) {
+                                                    response.sendRedirect("ccompras.jsp");
+                                                } else {
+                                                    request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                                            + "Ocurrio un error. Intentelo nuevamente\n"
+                                                            + "</div>");
+                                                    request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                                                }
                                             } else {
                                                 request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
                                                         + "Ocurrio un error. Intentelo nuevamente\n"
@@ -222,6 +358,59 @@ public class DCarritoCController extends HttpServlet {
                                     + "</div>");
                             request.getRequestDispatcher("confirm.jsp").forward(request, response);
                         }
+                    }
+                } else {
+                    request.setAttribute("msg", "<div class=\"alert alert-info\" role=\"alert\">\n"
+                            + "Necesita estar logueado como cliente para acceder al carrito.\n"
+                            + "</div>");
+                    request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                }
+
+            } catch (Exception ex) {
+                request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                        + "Ocurrio un error. Intentelo nuevamente\n"
+                        + "</div>");
+                request.getRequestDispatcher("confirm.jsp").forward(request, response);
+            }
+            break;
+            case "eliminarCarritoMul":
+                try {
+                Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
+                if (cliente != null) {
+                    Connection con = datasource.getConnection();
+                    DHistorial dHistorial = dHistorialServiceImpl.get(cliente.getId_cli(), con);
+                    if (dHistorial != null) {
+                        con = datasource.getConnection();
+                        boolean exito = mCarritoCServiceImpl.deleteAll(Integer.parseInt(request.getParameter("id_dhis")), con);
+                        if (exito) {
+                            con = datasource.getConnection();
+                            dHistorial.setArticulos(0);
+                            dHistorial.setSub_total(0);
+                            dHistorial.setIva(0);
+                            dHistorial.setTotal(0);
+                            Date sqlDate = new Date(new java.util.Date().getTime());
+                            dHistorial.setFecha(sqlDate.toLocalDate());
+                            dHistorial.setComprado(false);
+                            dHistorial = dHistorialServiceImpl.modify(dHistorial, con);
+                            if (dHistorial != null) {
+                                response.sendRedirect("ccompras.jsp");
+                            } else {
+                                request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                        + "Ocurrio un error. Intentelo nuevamente\n"
+                                        + "</div>");
+                                request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                            }
+                        } else {
+                            request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                    + "Ocurrio un error. Intentelo nuevamente\n"
+                                    + "</div>");
+                            request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                        }
+                    } else {
+                        request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                + "Ocurrio un error. Intentelo nuevamente\n"
+                                + "</div>");
+                        request.getRequestDispatcher("confirm.jsp").forward(request, response);
                     }
                 } else {
                     request.setAttribute("msg", "<div class=\"alert alert-info\" role=\"alert\">\n"

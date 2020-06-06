@@ -41,5 +41,38 @@ public class DProductosServiceImpl implements DProductosServiceAPI{
             con.close();
         }
     }
+
+    @Override
+    public DProductos modify(DProductos dProductos, Connection con) throws SQLException {
+        try{
+            return dProductosDaoImpl.modify(dProductos, con);
+        }catch(SQLException ex){
+            return null;
+        }finally{
+            con.close();
+        }
+    }
+
+    @Override
+    public boolean delete(int id_dprod, Connection con) throws SQLException {
+       try{
+            return dProductosDaoImpl.delete(id_dprod, con);
+        }catch(SQLException ex){
+            return false;
+        }finally{
+            con.close();
+        }
+    }
+
+    @Override
+    public DProductos add(DProductos dProductos, Connection con) throws SQLException {
+        try{
+            return dProductosDaoImpl.add(dProductos, con);
+        }catch(SQLException ex){
+            return null;
+        }finally{
+            con.close();
+        }
+    }
     
 }

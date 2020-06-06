@@ -76,7 +76,7 @@ public class ClienteController extends HttpServlet {
                                 + "Se ha registrado exitosamente\n"
                                 + "</div>");
                         Cookie miCookie = new Cookie("idCliente", cliente.getId_cli());
-                        miCookie.setMaxAge(60 * 60 * 24);
+                        miCookie.setMaxAge(60 * 60 * 24 * 7);
                         response.addCookie(miCookie);
                         request.getRequestDispatcher("confirm.jsp").forward(request, response);
                     } else {
@@ -102,7 +102,7 @@ public class ClienteController extends HttpServlet {
                 if (cliente != null) {
                     request.getSession().setAttribute("usuario", cliente);
                     Cookie miCookie = new Cookie("idCliente", cliente.getId_cli());
-                    miCookie.setMaxAge(60 * 60 * 24);
+                    miCookie.setMaxAge(60 * 60 * 24 * 7);
                     response.addCookie(miCookie);
                     response.sendRedirect("index.jsp");
                 } else {

@@ -20,4 +20,10 @@ public interface DProductosDaoApi {
     
     ArrayList<DProductos> getAll(Connection con) throws SQLException;
     
+    DProductos modify(DProductos dProductos,Connection con) throws SQLException;
+    
+    boolean delete(int id_dprod, Connection con) throws SQLException;
+    
+    DProductos add(DProductos dProductos,Connection con) throws SQLException;
+    
 }
