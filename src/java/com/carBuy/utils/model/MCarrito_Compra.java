@@ -14,10 +14,6 @@ public class MCarrito_Compra {
     private int id_mcc;
     private int id_dprod;
     private int id_dhis;
-    private int Cantidad;
-    private double Sub_total;
-    private double Iva;
-    private double Total;
 
     public int getId_mcc() {
         return id_mcc;
@@ -33,38 +29,6 @@ public class MCarrito_Compra {
 
     public void setId_dprod(int id_dprod) {
         this.id_dprod = id_dprod;
-    }
-
-    public int getCantidad() {
-        return Cantidad;
-    }
-
-    public void setCantidad(int Cantidad) {
-        this.Cantidad = Cantidad;
-    }
-
-    public double getSub_total() {
-        return Sub_total;
-    }
-
-    public void setSub_total(double Sub_total) {
-        this.Sub_total = Sub_total;
-    }
-
-    public double getIva() {
-        return Iva;
-    }
-
-    public void setIva(double Iva) {
-        this.Iva = Iva;
-    }
-
-    public double getTotal() {
-        return Total;
-    }
-
-    public void setTotal(double Total) {
-        this.Total = Total;
     }
 
     public int getId_dhis() {

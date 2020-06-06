@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/impl/DHistorialDaoImpl.java</file>
             <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/impl/MCarritoCDaoImpl.java</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/model/DHistorial.java</file>
-            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/dao/MCarritoCDaoApi.java</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/description.jsp</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/web/ccompras.jsp</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/controller/DCarritoCController.java</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/service/impl/DHistorialServiceImpl.java</file>
+            <file>file:/C:/Users/kcram/OneDrive/Documentos/Git/Carrito_Compras/src/java/com/carBuy/utils/service/impl/MCarritoCServiceImpl.java</file>
         </group>
     </open-files>
 </project-private>

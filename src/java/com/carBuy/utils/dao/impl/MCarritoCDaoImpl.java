@@ -23,16 +23,10 @@ public class MCarritoCDaoImpl implements MCarritoCDaoApi {
     public MCarrito_Compra add(MCarrito_Compra mCarrito_Compra, Connection con) throws SQLException {
         try {
             PreparedStatement ps = con.prepareStatement("insert into mcarrito_compra"
-                    + "(id_mcc,id_dhis,id_dprod,id_dhis,cantidad,sub_total,iva,total) "
-                    + "values(?,?,?,?,?,?,?,?)");
-            ps.setInt(1, mCarrito_Compra.getId_mcc());
-            ps.setInt(2, mCarrito_Compra.getId_dhis());
-            ps.setInt(3, mCarrito_Compra.getId_dprod());
-            ps.setInt(4, mCarrito_Compra.getId_dhis());
-            ps.setInt(5, mCarrito_Compra.getCantidad());
-            ps.setDouble(6, mCarrito_Compra.getSub_total());
-            ps.setDouble(7, mCarrito_Compra.getIva());
-            ps.setDouble(8, mCarrito_Compra.getTotal());
+                    + "(id_mcc,id_dhis,id_dprod) "
+                    + "values(null,?,?)");
+            ps.setInt(1, mCarrito_Compra.getId_dhis());
+            ps.setInt(2, mCarrito_Compra.getId_dprod());
             ps.executeUpdate();
             ps.close();
             return mCarrito_Compra;
@@ -85,13 +79,7 @@ public class MCarritoCDaoImpl implements MCarritoCDaoApi {
                     MCarrito_Compra mCarrito_Compra = new MCarrito_Compra();
                     mCarrito_Compra.setId_mcc(rs.getInt("id_mcc"));
                     mCarrito_Compra.setId_dhis(rs.getInt("id_dhis"));
-                    mCarrito_Compra.setId_dprod(rs.getInt("id_prod"));
-                    mCarrito_Compra.setId_dhis(rs.getInt("id_dhis"));
-                    mCarrito_Compra.setCantidad(rs.getInt("cantidad"));
-                    mCarrito_Compra.setSub_total(rs.getInt("sub_total"));
-                    mCarrito_Compra.setSub_total(rs.getDouble("sub_total"));
-                    mCarrito_Compra.setIva(rs.getDouble("iva"));
-                    mCarrito_Compra.setTotal(rs.getDouble("total"));
+                    mCarrito_Compra.setId_dprod(rs.getInt("id_dprod"));
                     mCarrito_CompraArray.add(mCarrito_Compra);
                 }
                 return mCarrito_CompraArray;

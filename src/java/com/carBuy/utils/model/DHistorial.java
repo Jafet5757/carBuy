@@ -15,8 +15,10 @@ public class DHistorial {
 
     private int id_dhis;
     private String id_cli;
-    private double totalpag;
-    private int totalart;
+    private double sub_total;
+    private double iva;
+    private double total;
+    private int articulos;
     private LocalDate fecha;
     private boolean comprado;
 
@@ -36,20 +38,28 @@ public class DHistorial {
         this.id_cli = id_cli;
     }
 
-    public double getTotalpag() {
-        return totalpag;
+    public double getSub_total() {
+        return sub_total;
     }
 
-    public void setTotalpag(double totalpag) {
-        this.totalpag = totalpag;
+    public void setSub_total(double sub_total) {
+        this.sub_total = sub_total;
     }
 
-    public int getTotalart() {
-        return totalart;
+    public double getIva() {
+        return iva;
     }
 
-    public void setTotalart(int totalart) {
-        this.totalart = totalart;
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
+
+    public int getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(int articulos) {
+        this.articulos = articulos;
     }
 
     public LocalDate getFecha() {
@@ -66,5 +76,13 @@ public class DHistorial {
 
     public void setComprado(boolean comprado) {
         this.comprado = comprado;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

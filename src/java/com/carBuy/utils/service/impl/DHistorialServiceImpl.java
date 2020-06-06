@@ -44,6 +44,8 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             }
         } catch (Exception ex) {
             return null;
+        }finally{
+            con.close();
         }
     }
 
@@ -57,6 +59,8 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             }
         } catch (Exception ex) {
             return null;
+        }finally{
+            con.close();
         }
     }
 
@@ -66,18 +70,23 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             return dHistorialDaoImpl.getByDate(fecha, con);
         } catch (Exception ex) {
             return null;
+        }finally{
+            con.close();
         }
     }
     
+    @Override
     public DHistorial modify(DHistorial dHistorial,Connection con)throws SQLException{
         try {
             if (!checkKeys(dHistorial.getId_cli())) {
                 return null;
             } else {
-                return dHistorialDaoImpl.add(dHistorial, con);
+                return dHistorialDaoImpl.modify(dHistorial, con);
             }
         } catch (Exception ex) {
             return null;
+        }finally{
+            con.close();
         }
     }
 
@@ -91,6 +100,8 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             }
         } catch (Exception ex) {
             return null;
+        }finally{
+            con.close();
         }
     }
 
@@ -104,6 +115,8 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             }
         } catch (Exception ex) {
             return false;
+        }finally{
+            con.close();
         }
     }
 
@@ -117,6 +130,8 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             }
         } catch (Exception ex) {
             return false;
+        }finally{
+            con.close();
         }
     }
 
@@ -130,6 +145,8 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             }
         } catch (Exception ex) {
             return false;
+        }finally{
+            con.close();
         }
     }
 
@@ -143,6 +160,8 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
             }
         } catch (Exception ex) {
             return false;
+        }finally{
+            con.close();
         }
     }
 

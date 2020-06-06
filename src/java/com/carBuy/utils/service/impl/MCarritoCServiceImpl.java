@@ -27,6 +27,8 @@ public class MCarritoCServiceImpl implements MCarritoCServiceAPI {
             return mCarritoCDaoImpl.add(mCarrito_Compra, con);
         }catch(Exception ex){
             return null;
+        }finally{
+            con.close();
         }
     }
 
@@ -36,6 +38,8 @@ public class MCarritoCServiceImpl implements MCarritoCServiceAPI {
             return mCarritoCDaoImpl.delete(id_mcc, con);
         }catch(Exception ex){
             return false;
+        }finally{
+            con.close();
         }
     }
 
@@ -45,6 +49,8 @@ public class MCarritoCServiceImpl implements MCarritoCServiceAPI {
             return mCarritoCDaoImpl.deleteAll(id_dhis, con);
         }catch(Exception ex){
             return false;
+        }finally{
+            con.close();
         }
     }
 
@@ -54,6 +60,8 @@ public class MCarritoCServiceImpl implements MCarritoCServiceAPI {
             return mCarritoCDaoImpl.getAll(id_dhis, con);
         }catch(Exception ex){
             return null;
+        }finally{
+            con.close();
         }
     }
 
