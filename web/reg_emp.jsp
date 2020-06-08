@@ -82,6 +82,10 @@
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
                             <%
+                                    }if (empleado.getId_cpe() == 2) {
+                            %>
+                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
+                            <%
                                     }
                                 }
                             } else {

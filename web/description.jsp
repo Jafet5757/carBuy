@@ -110,11 +110,16 @@
                             <%
                                 if (empleado != null) {
                             %>
-                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
+                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                             <%
                                 if (empleado.getId_cpe() == 1) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
+                            <%
+                                }
+                                if (empleado.getId_cpe() <= 2) {
+                            %>
+                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                             <%
                                     }
                                 }
@@ -124,7 +129,6 @@
                             <%
                                 }
                             %>
-                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                         <li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
                     </ul>
                 </div>
@@ -161,12 +165,11 @@
                             <h5 class="card-title h1"><%=mProductos.getNom_prod()%></h5>		       
                             <p>Color: <%=cColorProd.getTipo_ccp()%><br><br>marca: <%=catProductos.getTipo_prod()%><br><br>Precio: $<%=dProductos.getPrecio_prod()%> mxn</p>
                             <div class="row">
-                                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
+                                <form class="col-md-auto mt-1" action="directTarjeta.jsp" method="post">
                                     <input type="hidden" value="<%= dProductos.getId_dprod()%>" name="id_dprod"/>
-                                    <input type="hidden" value="compraDirecta" name="command"/>
-                                    <input type="submit" class="btn btn-danger m-2 btn2" id="buy" value="Comprar"/>
+                                    <input type="submit" class="btn btn-danger btn2" id="buy" value="Comprar"/>
                                 </form>
-                                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
+                                <form class="col-md-auto mt-1" action="DCarritoCController" method="post">
                                     <input type="hidden" value="<%= dProductos.getId_dprod()%>" name="id_dprod"/>
                                     <input type="hidden" value="agregarCarrito" name="command"/>
                                     <input type="submit" class="btn btn3" value="Agregar al carro de compras"/>

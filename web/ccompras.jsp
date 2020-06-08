@@ -104,11 +104,15 @@
                             <%
                                 if (empleado != null) {
                             %>
-                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
+                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                             <%
                                 if (empleado.getId_cpe() == 1) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
+                            <%
+                                    }if (empleado.getId_cpe() <= 2) {
+                            %>
+                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                             <%
                                     }
                                 }
@@ -118,7 +122,6 @@
                             <%
                                 }
                             %>
-                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                         <li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
                     </ul>
                 </div>
@@ -142,7 +145,7 @@
                     <input type="hidden" value="eliminarCarritoMul" name="command"/>
                     <input type="submit" class="btn btn-danger btn2" value="Borrar todo"/>
                 </form>
-                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
+                <form class="col-md-auto mt-3" action="confirmTarjeta.jsp" method="post">
                     <input type="hidden" value="confirmar" name="command"/>
                     <input type="submit" class="btn btn3" value="confirmar compra"/>
                 </form>
@@ -166,15 +169,40 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
+                                <%
+                                    if (dProductos.getStock_prod() > 0) {
+                                %>
                                 <h5 class="card-title"><%=mProductos.getNom_prod()%></h5>
                                 <p>Precio unitario: <%= dProductos.getPrecio_prod()%>$</p>
-                                <form class="col-md-auto mt-3" action="DCarritoCController" method="post">
-                                    <input type="hidden" value="<%= dProductos.getId_dprod()%>" name="id_dprod"/>
-                                    <input type="hidden" value="<%= dHistorial.getId_dhis()%>" name="id_dhis"/>
-                                    <input type="hidden" value="<%= mProducto.getId_mcc()%>" name="id_mcc"/>
-                                    <input type="hidden" value="eliminarCarritoUni" name="command"/>
-                                    <input type="submit" class="btn btn3" value="Borrar del carro"/>
-                                </form>
+                                <div class="row">
+                                    <form class="col-md-auto mt-1" action="description.jsp" method="post">
+                                        <input type="hidden" value="<%=mProductos.getId_mprod()%>" name="id"/>
+                                        <input type="submit" class="btn btn-danger btn2" value="Descripcion"/>
+                                    </form>
+                                    <form class="col-md-auto mt-1" action="DCarritoCController" method="post">
+                                        <input type="hidden" value="<%= dProductos.getId_dprod()%>" name="id_dprod"/>
+                                        <input type="hidden" value="<%= dHistorial.getId_dhis()%>" name="id_dhis"/>
+                                        <input type="hidden" value="<%= mProducto.getId_mcc()%>" name="id_mcc"/>
+                                        <input type="hidden" value="eliminarCarritoUni" name="command"/>
+                                        <input type="submit" class="btn btn3" value="Borrar del carro"/>
+                                    </form>
+                                </div>
+                                <%
+                                } else {
+                                %>
+                                <h5 class="card-title"><%=mProductos.getNom_prod()%></h5>
+                                <p>El producto ya no se encuentra disponible</p>
+                                <%
+                                        boolean exito = mCarritoCServiceImpl.delete(mProducto.getId_mcc(), con);
+                                        if (!exito) {
+                                            request.setAttribute("msg", "<div class=\"alert alert-warning\" role=\"alert\">\n"
+                                                    + "Ocurrio un error. Intentelo nuevamente\n"
+                                                    + "</div>");
+                                            request.getRequestDispatcher("confirm.jsp").forward(request, response);
+                                        }
+                                    }
+                                %>
+
                             </div>
                         </div>
                     </div>

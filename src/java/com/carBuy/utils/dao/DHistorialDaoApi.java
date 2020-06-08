@@ -21,7 +21,7 @@ public interface DHistorialDaoApi {
     
     ArrayList<DHistorial> getHis(String id_cli,Connection con)throws SQLException;
     
-    ArrayList<DHistorial> getByDate(LocalDate fecha,Connection con)throws SQLException;
+    ArrayList<DHistorial> getByDate(LocalDate fecha_ini,LocalDate fecha_end,Connection con)throws SQLException;
     
     DHistorial modify(DHistorial dHistorial,Connection con)throws SQLException;
     

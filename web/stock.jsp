@@ -1,41 +1,44 @@
 <%-- 
-    Document   : list_emp
-    Created on : 2/06/2020, 12:38:53 PM
+    Document   : stock
+    Created on : 7/06/2020, 05:23:31 PM
     Author     : kcram
 --%>
 
-<%@page import="com.carBuy.utils.model.CPrivilegio_Empleado"%>
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.carBuy.utils.service.impl.CPrivilegioEServiceImpl"%>
-<%@page import="com.carBuy.utils.service.impl.EmpleadoServiceImpl"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="com.carBuy.utils.model.Empleado"%>
-<%@page import="com.carBuy.utils.model.Cliente"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
+<%@page import="com.carBuy.utils.model.CColorProd"%>
+<%@page import="com.carBuy.utils.model.CatProductos"%>
+<%@page import="com.carBuy.utils.model.MProductos"%>
+<%@page import="com.carBuy.utils.model.DProductos"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="javax.sql.DataSource"%>
 <%@page import="javax.annotation.Resource"%>
-<%@page import="java.sql.SQLException"%>
+<%@page import="com.carBuy.utils.service.impl.CatProductosServiceImpl"%>
+<%@page import="com.carBuy.utils.service.impl.CColorProdServiceImpl"%>
+<%@page import="com.carBuy.utils.service.impl.MProductosServiceImpl"%>
+<%@page import="com.carBuy.utils.service.impl.DProductosServiceImpl"%>
+<%@page import="com.carBuy.utils.model.Empleado"%>
+<%@page import="com.carBuy.utils.model.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%!
+    private DProductosServiceImpl dProductosServiceImpl = new DProductosServiceImpl();
+    private MProductosServiceImpl mProductosServiceImpl = new MProductosServiceImpl();
+    private CColorProdServiceImpl cColorProdServiceImpl = new CColorProdServiceImpl();
+    private CatProductosServiceImpl catProductosServiceImpl = new CatProductosServiceImpl();
     @Resource(name = "jdbc/dbPool")
     private DataSource datasource;
-    private EmpleadoServiceImpl empleadoServiceImpl = new EmpleadoServiceImpl();
-    private CPrivilegioEServiceImpl cPrivilegioEServiceImpl = new CPrivilegioEServiceImpl();
 %>
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <title>My cuenta</title>
+        <title>stock</title>
         <style type="text/css">
             a{
                 color: #CECECE;
             }
         </style>
     </head>
-    <body>
     <body>
 
         <nav class="navbar navbar-expand-md navbar-danger bg-danger">
@@ -76,13 +79,13 @@
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
                             <%
-                                } else {
-                                    request.getRequestDispatcher("error_page.jsp").forward(request, response);
                                 }
                                 if (empleadoSesion.getId_cpe() <= 2) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                             <%
+                                    } else {
+                                        request.getRequestDispatcher("error_page.jsp").forward(request, response);
                                     }
                                 }
                             } else {
@@ -97,18 +100,17 @@
                 </div>
             </div>
         </nav>
-
         <div class="container">
             <br>
             <div>
-                <a href="reg_emp.jsp" class="btn btn-primary">Agregar</a>
+                <a href="reg_prod.jsp" class="btn btn-primary">Agregar</a>
             </div>
             <br>
             <%
                 try {
                     Connection con = datasource.getConnection();
-                    ArrayList<Empleado> empleadoArray = empleadoServiceImpl.getAll(con);
-                    if (empleadoArray == null) {
+                    ArrayList<DProductos> dProductosArray = dProductosServiceImpl.getAll(con);
+                    if (dProductosArray == null) {
             %>
             <div class="alert alert-info" role="alert">
                 No se encontraron registros
@@ -117,63 +119,58 @@
             } else {
             %>
             <div>
-                <h2>Empleados</h2>
+                <h2>Productos</h2>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Usuario</th>
+                            <th>Imagen</th>
                             <th>Nombre</th>
-                            <th>APaterno</th>
-                            <th>AMaterno</th>
-                            <th>FechaNac</th>
-                            <th>Direccion</th>
-                            <th>Telefono</th>
-                            <th>Celular</th>
-                            <th>Contraseña</th>
-                            <th>Puesto</th>
+                            <th>Marca</th>
+                            <th>Color</th>
+                            <th>Descripcion</th>
+                            <th>Precio Unitario</th>
+                            <th>Unidades</th>
                             <th></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <%
-                            for (Empleado empleado : empleadoArray) {
-                                if (!empleado.getId_emp().equals(empleadoSesion.getId_emp())) {
-                                    try {
-                                        con = datasource.getConnection();
-                                        CPrivilegio_Empleado cPrivilegio_Empleado = cPrivilegioEServiceImpl.get(empleado.getId_cpe(), con);
+                            for (DProductos dProductos : dProductosArray) {
+                                try {
+                                    con = datasource.getConnection();
+                                    MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
+                                    con = datasource.getConnection();
+                                    CColorProd cColorProd = cColorProdServiceImpl.get(dProductos.getId_ccp(), con);
+                                    con = datasource.getConnection();
+                                    CatProductos catProductos = catProductosServiceImpl.get(dProductos.getId_prod(), con);
                         %>
                         <tr>
-                            <th><%= empleado.getId_emp()%></th>
-                            <th><%= empleado.getNom_emp()%></th>
-                            <th><%= empleado.getApp_emp()%></th>
-                            <th><%= empleado.getApm_emp()%></th>
-                            <th><%= empleado.getFnac_emp()%></th>
-                            <th><%= empleado.getDir_emp()%></th>
-                            <th><%= empleado.getTel_emp()%></th>
-                            <th><%= empleado.getCel_emp()%></th>
-                            <th><%= empleado.getPass_emp()%></th>
-                            <th><%= cPrivilegio_Empleado.getTipo_pe()%></th>
+                            <th><img src="<%=mProductos.getImg_prod()%>" class="img-fluid" alt="ERROR: revise los registros"></th>
+                            <th><%= mProductos.getNom_prod() %></th>
+                            <th><%= catProductos.getTipo_prod() %></th>
+                            <th><%= cColorProd.getTipo_ccp() %></th>
+                            <th><%= mProductos.getDes_prod() %></th>
+                            <th><%= dProductos.getPrecio_prod() %></th>
+                            <th><%= dProductos.getStock_prod() %></th>
                             <th>
-                                <form action="act_emp.jsp" method="post">
-                                    <input type="hidden" value="<%= empleado.getId_emp()%>" name="id_emp"/>
-                                    <input type="hidden" value="<%= empleado.getPass_emp()%>" name="pass_emp"/>
+                                <form action="act_prod.jsp" method="post">
+                                    <input type="hidden" value="<%=dProductos.getId_dprod()%>" name="Id_dprod"/>
                                     <input type="submit" class="btn btn-info" value="Editar"/>
                                 </form>
                             </th>
                             <th>
                                 <form action="conf_Del_emp.jsp" method="post">
-                                    <input type="hidden" value="<%= empleado.getId_emp()%>" name="id_emp"/>
-                                    <input type="hidden" value="<%= empleado.getPass_emp()%>" name="pass_emp"/>
+                                    <input type="hidden" value="<%=dProductos.getId_dprod()%>" name="Id_dprod"/>
                                     <input type="submit" class="btn btn-danger" value="Eliminar"/>
                                 </form>
                             </th>
                         </tr>
                         <%
-                                        } catch (SQLException ex) {
-                                            request.getRequestDispatcher("error_page.jsp").forward(request, response);
-                                        }
+                                    } catch (SQLException ex) {
+                                        request.getRequestDispatcher("error_page.jsp").forward(request, response);
                                     }
+
                                 }
                             }
                         } catch (Exception ex) {
@@ -188,11 +185,5 @@
                 </table>
             </div>
         </div>
-    </div>
-
-
-</body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>
 </html>

@@ -8,6 +8,7 @@ package com.carBuy.utils.dao;
 import com.carBuy.utils.model.CatProductos;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,4 +16,10 @@ import java.sql.SQLException;
  */
 public interface CatProductosDaoApi {
     CatProductos get(int id_prod,Connection con)throws SQLException;
+    
+    CatProductos add(CatProductos catProductos,Connection con)throws SQLException;
+    
+    boolean delete(CatProductos catProductos,Connection con)throws SQLException;
+    
+    ArrayList<CatProductos> getAll(Connection con)throws SQLException;
 }

@@ -8,6 +8,7 @@ package com.carBuy.utils.dao;
 import com.carBuy.utils.model.CColorProd;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,4 +17,10 @@ import java.sql.SQLException;
 public interface CColorProdDaoApi {
     
     CColorProd get(int id_ccp, Connection con)throws SQLException;
+    
+    CColorProd add(CColorProd cColorProd, Connection con)throws SQLException;
+    
+    boolean delete(int id_ccp, Connection con)throws SQLException;
+    
+    ArrayList<CColorProd> getAll(Connection con)throws SQLException;
 }

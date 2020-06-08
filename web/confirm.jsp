@@ -52,11 +52,15 @@
                             <%
                                 if (empleado != null) {
                             %>
-                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
+                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                             <%
                                 if (empleado.getId_cpe() == 1) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
+                            <%
+                                    }if (empleado.getId_cpe() <= 2) {
+                            %>
+                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                             <%
                                     }
                                 }
@@ -66,7 +70,6 @@
                             <%
                                 }
                             %>
-                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                         <li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
                     </ul>
                 </div>

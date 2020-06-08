@@ -65,9 +65,9 @@ public class DHistorialServiceImpl implements DHistorialServiceAPI {
     }
 
     @Override
-    public ArrayList<DHistorial> getByDate(LocalDate fecha, Connection con) throws SQLException {
+    public ArrayList<DHistorial> getByDate(LocalDate fecha_ini,LocalDate fecha_end, Connection con) throws SQLException {
         try {
-            return dHistorialDaoImpl.getByDate(fecha, con);
+            return dHistorialDaoImpl.getByDate(fecha_ini,fecha_end, con);
         } catch (Exception ex) {
             return null;
         }finally{

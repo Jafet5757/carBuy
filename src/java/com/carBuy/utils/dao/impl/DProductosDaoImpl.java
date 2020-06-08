@@ -7,7 +7,6 @@ package com.carBuy.utils.dao.impl;
 
 import com.carBuy.utils.dao.DProductosDaoApi;
 import com.carBuy.utils.model.DProductos;
-import com.carBuy.utils.model.MProductos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

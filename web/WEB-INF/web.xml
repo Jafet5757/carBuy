@@ -4,6 +4,10 @@
         <servlet-name>DCarritoCController</servlet-name>
         <servlet-class>com.carBuy.utils.controller.DCarritoCController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DProductosController</servlet-name>
+        <servlet-class>com.carBuy.utils.controller.DProductosController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DCarritoCController</servlet-name>
         <url-pattern>/DCarritoCController</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>EmpleadoController</servlet-name>
         <url-pattern>/EmpleadoController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DProductosController</servlet-name>
+        <url-pattern>/DProductosController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

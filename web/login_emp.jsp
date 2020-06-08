@@ -71,7 +71,6 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="login_cli.jsp">iniciar sesion</a></li>
-                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                         <li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
                     </ul>
                 </div>

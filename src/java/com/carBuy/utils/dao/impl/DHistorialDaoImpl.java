@@ -79,14 +79,16 @@ public class DHistorialDaoImpl implements DHistorialDaoApi {
     }
 
     @Override
-    public ArrayList<DHistorial> getByDate(LocalDate fecha, Connection con) throws SQLException {
+    public ArrayList<DHistorial> getByDate(LocalDate fecha_ini,LocalDate fecha_end, Connection con) throws SQLException {
         try {
             PreparedStatement ps = con.prepareStatement("select * from dhistorial "
-                    + "where fecha=? and comprado=1");
-            ps.setDate(1, Date.valueOf(fecha));
+                    + "where (fecha between ? and ?) and comprado=1");
+            ps.setDate(1, Date.valueOf(fecha_ini));
+            ps.setDate(2, Date.valueOf(fecha_end));
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                return null;
+                ArrayList<DHistorial> dHistorialArray = new ArrayList<>();
+                return dHistorialArray;
             } else {
                 ArrayList<DHistorial> dHistorialArray = new ArrayList<>();
                 rs.beforeFirst();
@@ -157,7 +159,7 @@ public class DHistorialDaoImpl implements DHistorialDaoApi {
     public boolean confirm(String id_cli, int id_dhis, Connection con) throws SQLException {
         try {
             PreparedStatement ps = con.prepareStatement("update dhistorial set "
-                    + "comprado=true where id_cli=? and id_dhis=?");
+                    + "comprado=1 where id_cli=? and id_dhis=?");
             ps.setString(1, id_cli);
             ps.setInt(2, id_dhis);
             ps.executeUpdate();

@@ -100,11 +100,17 @@
                             <%
                                 if (empleadoSession != null) {
                             %>
-                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
+                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                             <%
                                 if (empleadoSession.getId_cpe() == 1) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
+                            <%
+                                    } else {
+                                            request.getRequestDispatcher("error_page.jsp").forward(request, response);
+                                        }if (empleadoSession.getId_cpe() <= 2) {
+                            %>
+                        <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                             <%
                                     }
                                 }
@@ -115,7 +121,6 @@
                                     }
                                 }
                             %>
-                        <li class="nav-item"><a class="nav-link" href="graficas.jsp">Estadisticas</a></li>
                         <li class="nav-item"><a href="ccompras.jsp"><i class="fas fa-shopping-basket m-2" onclick="replaceW()"></i></a></li>
                     </ul>
                 </div>
@@ -159,8 +164,8 @@
                             request.getRequestDispatcher("error_page.jsp").forward(request, response);
                         } else {
                 %>
-                <input type="hidden" value="<%=empleado.getId_emp() %>" name="id_emp_org" />
-                <input type="hidden" value="<%=empleado.getPass_emp() %>" name="pass_emp_org" />
+                <input type="hidden" value="<%=empleado.getId_emp()%>" name="id_emp_org" />
+                <input type="hidden" value="<%=empleado.getPass_emp()%>" name="pass_emp_org" />
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="validationDefault01">Nombre de Usuario</label>
