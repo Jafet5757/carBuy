@@ -107,7 +107,8 @@
                             %>
                         <li class="nav-item"><a class="nav-link" href="list_emp.jsp">Empleados</a></li>
                             <%
-                                    }if (empleado.getId_cpe() <= 2) {
+                                }
+                                if (empleado.getId_cpe() <= 2) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="stock.jsp">Inventario</a></li>
                             <%
@@ -143,8 +144,10 @@
                     for (MCarrito_Compra mProducto : mProductosArray) {
                         con = datasource.getConnection();
                         DProductos dProductos = dProductosServiceImpl.get(mProducto.getId_dprod(), con);
-                        con = datasource.getConnection();
-                        MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
+                        if (dProductos != null) {
+
+                            con = datasource.getConnection();
+                            MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
 
                 %>
 
@@ -162,7 +165,16 @@
                     </div>
                 </div>
 
-                <%}
+                <%} else {
+                %>
+                <div class="card mb-3  ml-2" style="max-width: 540px;">
+                    <div class="alert alert-info" role="alert">
+                        El producto ya no se encuentra disponible.
+                    </div>
+                </div>  
+                <%
+                        }
+                    }
                 %></div><p class="font-weight-bold">Sub total: <%= dHistorial.getSub_total()%>$</p>
             <p class="font-weight-bold">Iva: <%= dHistorial.getIva()%>$</p>
             <p class="font-weight-bold">Total: <%= dHistorial.getTotal()%>$</p>

@@ -4,6 +4,8 @@
     Author     : kcram
 --%>
 
+<%@page import="com.carBuy.utils.service.impl.ClienteServiceImpl"%>
+<%@page import="com.carBuy.utils.service.impl.EmpleadoServiceImpl"%>
 <%@page import="com.carBuy.utils.model.CColorProd"%>
 <%@page import="com.carBuy.utils.model.CatProductos"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,6 +23,7 @@
     String msg = null;
     @Resource(name = "jdbc/dbPool")
     private DataSource datasource;
+    private EmpleadoServiceImpl empleadoServiceImpl = new EmpleadoServiceImpl();
     private CColorProdServiceImpl cColorProdServiceImpl = new CColorProdServiceImpl();
     private CatProductosServiceImpl catProductosServiceImpl = new CatProductosServiceImpl();
 %>
@@ -79,13 +82,25 @@
                                     empleado = (Empleado) session.getAttribute("usuario");
                                 } catch (Exception ex) {
                                 }
+                                if (cliente == null && empleado == null) {
+                                    Cookie[] misCookies = request.getCookies();
+                                    if (misCookies != null) {
+                                        for (Cookie cookie : misCookies) {
+                                            if (cookie.getName().equals("idEmpleado")) {
+                                                Connection con = datasource.getConnection();
+                                                empleado = empleadoServiceImpl.getCookie(cookie.getValue(), con);
+                                                request.getSession().setAttribute("usuario", empleado);
+                                            }
+                                        }
+                                    }
+                                }
                                 if ((cliente == null && empleado == null) || cliente != null) {
                                     request.getRequestDispatcher("error_page.jsp").forward(request, response);
                                 } else {
                                     if (cliente != null || empleado != null) {
                             %>
                         <li class="nav-item"><a class="nav-link" href="account.jsp">mi cuenta</a></li>
-                        <li class="nav-item"><a class="nav-link" href="HitorialCompras.jsp">Historial</a></li>
+                        <li class="nav-item"><a class="nav-link" href="hcompras.jsp">Historial</a></li>
                             <%
                                 if (empleado != null) {
                             %>
@@ -117,8 +132,8 @@
         </nav>
         <div class="container mx-auto m-5">
             <div class="row mx-auto">
-                <form action="EmpleadoController" id="formula" method="post">
-                    <input type="hidden" value="crearUsuario" name="command" />
+                <form action="DProductosController" enctype="MULTIPART/FORM-DATA" id="formula" method="post">
+                    <input type="hidden" value="agregarProducto" name="command" />
                     <%
                         try {
                             msg = (String) request.getAttribute("msg");
@@ -186,6 +201,7 @@
                         <div class="col mb-3">
                             <label for="validationDefault03">Descripcion</label>
                             <textarea
+                                maxlength="200"
                                 class="form-control"
                                 id="validationDefault03"
                                 name="des_prod"
@@ -228,6 +244,7 @@
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Enviar</button>
+                    <a href="stock.jsp"><button class="btn btn-info" type="submit">Regresar</button></a>
                 </form>
             </div>
         </div>

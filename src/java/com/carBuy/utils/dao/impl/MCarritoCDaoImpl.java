@@ -88,4 +88,18 @@ public class MCarritoCDaoImpl implements MCarritoCDaoApi {
             return null;
         }
     }
+
+    @Override
+    public boolean deleteByProd(int id_dprod, Connection con) throws SQLException {
+        try {
+            PreparedStatement ps = con.prepareStatement("delete from mcarrito_compra "
+                    + "where id_dprod=?");
+            ps.setInt(1, id_dprod);
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

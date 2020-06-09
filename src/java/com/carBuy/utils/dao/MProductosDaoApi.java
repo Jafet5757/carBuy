@@ -16,7 +16,13 @@ import java.util.ArrayList;
  */
 public interface MProductosDaoApi {
     
+    MProductos save(MProductos mProductos, Connection con)throws SQLException;
+    
     MProductos get(int id_mprod,Connection con) throws SQLException;
     
     ArrayList<MProductos> getAll(Connection con) throws SQLException;
+    
+    boolean delete(int id_mprod,Connection con) throws SQLException;
+    
+    MProductos modify(MProductos mProductos, Connection con)throws SQLException;
 }

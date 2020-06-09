@@ -22,5 +22,7 @@ public interface MCarritoCDaoApi {
     
     boolean deleteAll(int id_dhis,Connection con)throws SQLException;
     
+    boolean deleteByProd(int id_dprod,Connection con)throws SQLException;
+    
     ArrayList<MCarrito_Compra> getAll(int id_dhis,Connection con)throws SQLException;
 }

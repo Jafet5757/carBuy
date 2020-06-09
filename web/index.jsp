@@ -191,7 +191,7 @@
                         <h5 class="card-title"><%=mProducto.getNom_prod()%></h5>
                         <p class="card-text"><%=mProducto.getDes_prod()%></p>
                         <form action="description.jsp" method="post">
-                            <input type="hidden" value="<%=mProducto.getId_mprod()%>" name="id"/>
+                            <input type="hidden" value="<%=dProducto.getId_dprod()%>" name="id"/>
                             <input type="submit" class="btn btn-danger btn2" value="Mas"/>
                         </form>
                     </div>

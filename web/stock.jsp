@@ -4,6 +4,7 @@
     Author     : kcram
 --%>
 
+<%@page import="com.carBuy.utils.service.impl.EmpleadoServiceImpl"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.carBuy.utils.model.CColorProd"%>
@@ -21,6 +22,7 @@
 <%@page import="com.carBuy.utils.model.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
+    private EmpleadoServiceImpl empleadoServiceImpl = new EmpleadoServiceImpl();
     private DProductosServiceImpl dProductosServiceImpl = new DProductosServiceImpl();
     private MProductosServiceImpl mProductosServiceImpl = new MProductosServiceImpl();
     private CColorProdServiceImpl cColorProdServiceImpl = new CColorProdServiceImpl();
@@ -63,6 +65,18 @@
                                     empleadoSesion = (Empleado) session.getAttribute("usuario");
                                 } catch (Exception ex) {
                                 }
+                                if (clienteSesion == null && empleadoSesion == null) {
+                                    Cookie[] misCookies = request.getCookies();
+                                    if (misCookies != null) {
+                                        for (Cookie cookie : misCookies) {
+                                            if (cookie.getName().equals("idEmpleado")) {
+                                                Connection con = datasource.getConnection();
+                                                empleadoSesion = empleadoServiceImpl.getCookie(cookie.getValue(), con);
+                                                request.getSession().setAttribute("usuario", empleadoSesion);
+                                            }
+                                        }
+                                    }
+                                }
                                 if ((clienteSesion == null && empleadoSesion == null) || clienteSesion != null) {
                                     request.getRequestDispatcher("error_page.jsp").forward(request, response);
                                 } else {
@@ -102,10 +116,11 @@
         </nav>
         <div class="container">
             <br>
-            <div>
-                <a href="reg_prod.jsp" class="btn btn-primary">Agregar</a>
+            <div class="row">
+                <div class="col m-2">
+                    <a href="reg_prod.jsp" class="btn btn-primary">Agregar</a>
+                </div>
             </div>
-            <br>
             <%
                 try {
                     Connection con = datasource.getConnection();
@@ -147,12 +162,12 @@
                         %>
                         <tr>
                             <th><img src="<%=mProductos.getImg_prod()%>" class="img-fluid" alt="ERROR: revise los registros"></th>
-                            <th><%= mProductos.getNom_prod() %></th>
-                            <th><%= catProductos.getTipo_prod() %></th>
-                            <th><%= cColorProd.getTipo_ccp() %></th>
-                            <th><%= mProductos.getDes_prod() %></th>
-                            <th><%= dProductos.getPrecio_prod() %></th>
-                            <th><%= dProductos.getStock_prod() %></th>
+                            <th><%= mProductos.getNom_prod()%></th>
+                            <th><%= catProductos.getTipo_prod()%></th>
+                            <th><%= cColorProd.getTipo_ccp()%></th>
+                            <th><%= mProductos.getDes_prod()%></th>
+                            <th><%= dProductos.getPrecio_prod()%></th>
+                            <th><%= dProductos.getStock_prod()%></th>
                             <th>
                                 <form action="act_prod.jsp" method="post">
                                     <input type="hidden" value="<%=dProductos.getId_dprod()%>" name="Id_dprod"/>
@@ -160,7 +175,7 @@
                                 </form>
                             </th>
                             <th>
-                                <form action="conf_Del_emp.jsp" method="post">
+                                <form action="conf_Del_prod.jsp" method="post">
                                     <input type="hidden" value="<%=dProductos.getId_dprod()%>" name="Id_dprod"/>
                                     <input type="submit" class="btn btn-danger" value="Eliminar"/>
                                 </form>

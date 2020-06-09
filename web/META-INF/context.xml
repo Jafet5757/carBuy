@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/carBuy">
+<Context docBase="C:/carBuy_images" path="/carBuy">
     <Resource name="jdbc/dbPool" auth="Container" type="javax.sql.DataSource"
     
         maxActive="15" maxIdle="3" maxWait="5000"

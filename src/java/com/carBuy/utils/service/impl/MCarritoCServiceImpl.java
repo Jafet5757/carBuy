@@ -65,4 +65,15 @@ public class MCarritoCServiceImpl implements MCarritoCServiceAPI {
         }
     }
 
+    @Override
+    public boolean deleteByProd(int id_dprod, Connection con) throws SQLException {
+        try{
+            return mCarritoCDaoImpl.delete(id_dprod, con);
+        }catch(Exception ex){
+            return false;
+        }finally{
+            con.close();
+        }
+    }
+
 }
