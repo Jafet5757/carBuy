@@ -215,37 +215,40 @@
                             for (DHistorial dHistorial : dHistorialWeek) {
                                 con = datasource.getConnection();
                                 ArrayList<MCarrito_Compra> mCarritoCArray = mCarritoCServiceImpl.getAll(dHistorial.getId_dhis(), con);
-                                for (MCarrito_Compra mCarritoC : mCarritoCArray) {
-                                    con = datasource.getConnection();
-                                    DProductos dProductos = dProductosServiceImpl.get(mCarritoC.getId_dprod(), con);
-                                    con = datasource.getConnection();
-                                    MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
-                                    if (!labelsWeekArray.contains(mProductos.getNom_prod())) {
-                                        labelsWeekArray.add(mProductos.getNom_prod());
-                                        stockWeekArray.add(1);
-                                    } else {
-                                        int index = labelsWeekArray.indexOf(mProductos.getNom_prod());
-                                        stockWeekArray.set(index, stockWeekArray.get(index) + 1);
+                                if (mCarritoCArray != null) {
+                                    for (MCarrito_Compra mCarritoC : mCarritoCArray) {
+                                        con = datasource.getConnection();
+                                        DProductos dProductos = dProductosServiceImpl.get(mCarritoC.getId_dprod(), con);
+                                        con = datasource.getConnection();
+                                        MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
+                                        if (!labelsWeekArray.contains(mProductos.getNom_prod())) {
+                                            labelsWeekArray.add(mProductos.getNom_prod());
+                                            stockWeekArray.add(1);
+                                        } else {
+                                            int index = labelsWeekArray.indexOf(mProductos.getNom_prod());
+                                            stockWeekArray.set(index, stockWeekArray.get(index) + 1);
+                                        }
                                     }
                                 }
-
                             }
                         }
                         if (dHistorialMonth != null) {
                             for (DHistorial dHistorial : dHistorialMonth) {
                                 con = datasource.getConnection();
                                 ArrayList<MCarrito_Compra> mCarritoCArray = mCarritoCServiceImpl.getAll(dHistorial.getId_dhis(), con);
-                                for (MCarrito_Compra mCarritoC : mCarritoCArray) {
-                                    con = datasource.getConnection();
-                                    DProductos dProductos = dProductosServiceImpl.get(mCarritoC.getId_dprod(), con);
-                                    con = datasource.getConnection();
-                                    MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
-                                    if (!labelsMonthArray.contains(mProductos.getNom_prod())) {
-                                        labelsMonthArray.add(mProductos.getNom_prod());
-                                        stockMonthArray.add(1);
-                                    } else {
-                                        int index = labelsMonthArray.indexOf(mProductos.getNom_prod());
-                                        stockMonthArray.set(index, stockMonthArray.get(index) + 1);
+                                if (mCarritoCArray != null) {
+                                    for (MCarrito_Compra mCarritoC : mCarritoCArray) {
+                                        con = datasource.getConnection();
+                                        DProductos dProductos = dProductosServiceImpl.get(mCarritoC.getId_dprod(), con);
+                                        con = datasource.getConnection();
+                                        MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
+                                        if (!labelsMonthArray.contains(mProductos.getNom_prod())) {
+                                            labelsMonthArray.add(mProductos.getNom_prod());
+                                            stockMonthArray.add(1);
+                                        } else {
+                                            int index = labelsMonthArray.indexOf(mProductos.getNom_prod());
+                                            stockMonthArray.set(index, stockMonthArray.get(index) + 1);
+                                        }
                                     }
                                 }
                             }
@@ -254,20 +257,21 @@
                             for (DHistorial dHistorial : dHistorialFortnight) {
                                 con = datasource.getConnection();
                                 ArrayList<MCarrito_Compra> mCarritoCArray = mCarritoCServiceImpl.getAll(dHistorial.getId_dhis(), con);
-                                for (MCarrito_Compra mCarritoC : mCarritoCArray) {
-                                    con = datasource.getConnection();
-                                    DProductos dProductos = dProductosServiceImpl.get(mCarritoC.getId_dprod(), con);
-                                    con = datasource.getConnection();
-                                    MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
-                                    if (!labelsFortnightArray.contains(mProductos.getNom_prod())) {
-                                        labelsFortnightArray.add(mProductos.getNom_prod());
-                                        stockFortnightArray.add(1);
-                                    } else {
-                                        int index = labelsFortnightArray.indexOf(mProductos.getNom_prod());
-                                        stockFortnightArray.set(index, stockFortnightArray.get(index) + 1);
+                                if (mCarritoCArray != null) {
+                                    for (MCarrito_Compra mCarritoC : mCarritoCArray) {
+                                        con = datasource.getConnection();
+                                        DProductos dProductos = dProductosServiceImpl.get(mCarritoC.getId_dprod(), con);
+                                        con = datasource.getConnection();
+                                        MProductos mProductos = mProductosServiceImpl.get(dProductos.getId_mprod(), con);
+                                        if (!labelsFortnightArray.contains(mProductos.getNom_prod())) {
+                                            labelsFortnightArray.add(mProductos.getNom_prod());
+                                            stockFortnightArray.add(1);
+                                        } else {
+                                            int index = labelsFortnightArray.indexOf(mProductos.getNom_prod());
+                                            stockFortnightArray.set(index, stockFortnightArray.get(index) + 1);
+                                        }
                                     }
                                 }
-
                             }
                         }
                         String labels = "";
@@ -409,6 +413,7 @@
             <%
                 }
             } catch (Exception ex) {
+                System.out.println(ex);
             %>   
             <div class="alert alert-warning" role="alert">
                 Ocurrio un error. Intentelo mas tarde.
